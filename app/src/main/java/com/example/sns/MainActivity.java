@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
 
-    int num;
+    int num = 1;
     int a;
     String test = "test";
 
