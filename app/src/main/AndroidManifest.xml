@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SNS">
         <activity android:name=".ForthActivity"></activity>
+        <activity android:name=".SecondActivity"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
