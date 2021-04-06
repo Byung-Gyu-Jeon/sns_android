@@ -9,7 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SNS">
+<<<<<<< HEAD
         <activity android:name=".ThirdActivity"></activity>
+=======
+        <activity android:name=".ForthActivity"></activity>
+        <activity android:name=".SecondActivity"></activity>
+>>>>>>> a1eb4bab2f2858f7d1898aa5d1f88637d9896d23
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
