@@ -4,9 +4,14 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.EditText;
+
 import com.example.sns.R;
 
 /**
@@ -51,7 +56,24 @@ public class PWFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_p_w, container, false);
-        root.findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+
+        CheckBox checkBox = root.findViewById(R.id.checkBox);
+        EditText editTextTextPersonName4 = root.findViewById(R.id.editTextTextPersonName4);
+
+        checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkBox.isChecked()) {
+                    editTextTextPersonName4.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                } else {
+                    editTextTextPersonName4.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+
+            }
+        });
+
+
+        root.findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(getView()).navigate(R.id.action_from_pw_to_sign_name);

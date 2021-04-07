@@ -2,6 +2,7 @@ package com.example.sns.login;
 
 import android.os.Bundle;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -11,6 +12,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.sns.R;
+import com.example.sns.databinding.FragmentNameBinding;
+
+import org.jetbrains.annotations.NotNull;
 
 public class NameFragment extends Fragment {
 
@@ -19,6 +23,8 @@ public class NameFragment extends Fragment {
 
     private String mParam1;
     private String mParam2;
+    FragmentNameBinding bind;
+
 
     public NameFragment() {
         // Required empty public constructor
@@ -43,15 +49,15 @@ public class NameFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_name, container, false);
-        root.findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        bind = DataBindingUtil.inflate(inflater,R.layout.fragment_name, container, false);
+
+        bind.getRoot().findViewById(R.id.Btn_Sign).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(getView()).navigate(R.id.action_from_email_to_sign_pw);
             }
         });
-        return root;
+        return bind.getRoot();
     }
 }
