@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/signup_navigation"
+    app:startDestination="@+id/navigation_signup_login_navigator">
+
+<!--    로그인 프래그먼트-->
+    <fragment
+        android:id="@+id/navigation_signup_login_navigator"
+        android:name="com.example.sns.login.LoginFragment"
+        tools:layout="@layout/fragment_login" >
+<!--        로그인 프래그먼트에서 회원가입 이메일 입력화면으로 이동-->
+        <action
+            android:id="@+id/action_from_login_to_sign_email"
+            app:destination="@id/navigation_email"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"/>
+
+    </fragment>
+
+
+<!--    회원가입 이메일 입력화면 -->
+    <fragment
+        android:id="@+id/navigation_email"
+        android:name="com.example.sns.login.EmailFragment"
+        tools:layout="@layout/fragment_email" >
+        <action
+            android:id="@+id/action_from_email_to_sign_pw"
+            app:destination="@id/navigation_pw"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"/>
+
+    </fragment>
+
+<!--    비밀번호-->
+    <fragment
+        android:id="@+id/navigation_pw"
+        android:name="com.example.sns.login.PWFragment"
+        tools:layout="@layout/fragment_p_w" >
+        <action
+            android:id="@+id/action_from_pw_to_sign_name"
+            app:destination="@id/navigation_name"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"/>
+    </fragment>
+
+<!--    이름-->
+    <fragment
+        android:id="@+id/navigation_name"
+        android:name="com.example.sns.login.NameFragment"
+        tools:layout="@layout/fragment_name" >
+    </fragment>
+
+
+
+</navigation>
