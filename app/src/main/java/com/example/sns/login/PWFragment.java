@@ -53,8 +53,7 @@ public class PWFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_p_w, container, false);
 
         CheckBox checkBox = root.findViewById(R.id.checkBox);

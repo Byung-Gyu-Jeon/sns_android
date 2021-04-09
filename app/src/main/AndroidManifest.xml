@@ -9,14 +9,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SNS">
-        <activity android:name=".MainActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:theme="@style/Theme.MaterialComponents.NoActionBar">
+        <activity
+            android:name=".main.MainActivity"
+            android:label="@string/title_activity_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/Theme.MaterialComponents.NoActionBar"
+            android:windowSoftInputMode="adjustResize">
         </activity>
     </application>
 

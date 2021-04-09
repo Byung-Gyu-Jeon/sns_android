@@ -5,12 +5,12 @@
     android:id="@+id/signup_navigation"
     app:startDestination="@+id/navigation_signup_login_navigator">
 
-<!--    로그인 프래그먼트-->
+    <!--    로그인 프래그먼트-->
     <fragment
         android:id="@+id/navigation_signup_login_navigator"
         android:name="com.example.sns.login.LoginFragment"
         tools:layout="@layout/fragment_login" >
-<!--        로그인 프래그먼트에서 회원가입 이메일 입력화면으로 이동-->
+    <!--        로그인 프래그먼트에서 회원가입의 이메일 입력화면으로 이동-->
         <action
             android:id="@+id/action_from_login_to_sign_email"
             app:destination="@id/navigation_email"
@@ -22,11 +22,12 @@
     </fragment>
 
 
-<!--    회원가입 이메일 입력화면 -->
+    <!--    회원가입 이메일 입력화면 -->
     <fragment
         android:id="@+id/navigation_email"
         android:name="com.example.sns.login.EmailFragment"
         tools:layout="@layout/fragment_email" >
+    <!--   회원가입 이메일 입력화면에서 비밀번호 입력하는 화면으로 이동     -->
         <action
             android:id="@+id/action_from_email_to_sign_pw"
             app:destination="@id/navigation_pw"
@@ -37,11 +38,12 @@
 
     </fragment>
 
-<!--    비밀번호-->
+    <!--    회원가입 비밀번호 입력화면 -->
     <fragment
         android:id="@+id/navigation_pw"
         android:name="com.example.sns.login.PWFragment"
         tools:layout="@layout/fragment_p_w" >
+        <!--    회원가입 비밀번호 입력화면에서 이름 입력화면 -->
         <action
             android:id="@+id/action_from_pw_to_sign_name"
             app:destination="@id/navigation_name"
@@ -51,7 +53,7 @@
             app:exitAnim="@anim/slide_to_left"/>
     </fragment>
 
-<!--    이름-->
+    <!--    이름 입력화면    -->
     <fragment
         android:id="@+id/navigation_name"
         android:name="com.example.sns.login.NameFragment"
