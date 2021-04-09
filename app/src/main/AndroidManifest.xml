@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SNS">
-        <activity android:name=".main.ui.feed.ModifyFeedActivity"></activity>
+        <activity android:name=".main.ui.friend.FeedFix"></activity>
+        <activity android:name=".main.ui.friend.Feedmake" />
+        <activity android:name=".main.ui.feed.ModifyFeedActivity" />
         <activity android:name=".main.ui.feed.CreateFeedActivity" />
         <activity
             android:name=".main.MainActivity"

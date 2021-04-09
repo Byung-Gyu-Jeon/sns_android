@@ -19,7 +19,7 @@ public class FriendFragment extends Fragment {
         friendViewModel =
                 new ViewModelProvider(this).get(FriendViewModel.class);
         View root = inflater.inflate(R.layout.fragment_friend, container, false);
-        // 여기에다가 실제코드 작성
+
         return root;
     }
 }
