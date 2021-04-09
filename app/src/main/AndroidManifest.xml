@@ -9,6 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SNS">
+        <activity android:name=".main.ui.feed.ModifyFeedActivity"></activity>
+        <activity android:name=".main.ui.feed.CreateFeedActivity" />
         <activity
             android:name=".main.MainActivity"
             android:label="@string/title_activity_main">
@@ -21,8 +23,7 @@
         <activity
             android:name=".LoginActivity"
             android:theme="@style/Theme.MaterialComponents.NoActionBar"
-            android:windowSoftInputMode="adjustResize">
-        </activity>
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>
