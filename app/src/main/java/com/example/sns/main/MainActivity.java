@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
                 R.id.navigation_feed, R.id.navigation_friend, R.id.navigation_write, R.id.navigation_chat, R.id.navigation_mypage)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-//        navController.setGraph(R.navigation.mobile_navigation, bundle);
+        navController.setGraph(R.navigation.mobile_navigation, bundle);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 //        Navigation.findNavController(findViewById(R.id.container)).navigate(R.id.nav_host_fragment, bundle);
