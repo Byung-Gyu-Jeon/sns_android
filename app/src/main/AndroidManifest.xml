@@ -1,31 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.sns">
+    <!-- <uses-permission android:name="android.permission.WAKE_LOCK" /> -->
+    <!-- <uses-feature android:name="android.hardware.type.watch" /> -->
+    <!-- Glide모듈을 Custom하게 변경 -->
+    <!-- <meta-data -->
+    <!-- android:name="com.example.sns.MyGlide" -->
+    <!-- android:value="GlideModule" /> -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SNS">
-        <activity android:name=".main.ui.friend.FeedFix"></activity>
-        <activity android:name=".main.ui.friend.Feedmake" />
-        <activity android:name=".main.ui.feed.ModifyFeedActivity" />
-        <activity android:name=".main.ui.feed.CreateFeedActivity" />
-        <activity
-            android:name=".main.MainActivity"
-            android:label="@string/title_activity_main">
+        android:theme="@style/Theme.SNS"
+        android:usesCleartextTraffic="true">
+        <!-- <uses-library -->
+        <!-- android:name="com.google.android.wearable" -->
+        <!-- android:required="true" /> -->
+        <!--
+               Set to true if your app is Standalone, that is, it does not require the handheld
+               app to run.
+        -->
+        <!-- <meta-data -->
+        <!-- android:name="com.google.android.wearable.standalone" -->
+        <!-- android:value="true" /> -->
+        <activity android:name=".JoinActivity" />
+        <activity android:name=".main.MainActivity" />
+        <activity android:name=".main.ui.friend.FriendSearchActivity" />
+        <activity android:name=".MainLoginActivity"/>
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" /> <!-- android:name=".main.MainActivity"  밑의 엑티비티 원래 네임 -->
+        <activity android:name=".AppLogoActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".LoginActivity"
-            android:theme="@style/Theme.MaterialComponents.NoActionBar"
-            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

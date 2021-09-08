@@ -43,7 +43,7 @@ public class EmailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_email, container, false);
-        root.findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+        root.findViewById(R.id.Btn_Next).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(getView()).navigate(R.id.action_from_email_to_sign_pw);

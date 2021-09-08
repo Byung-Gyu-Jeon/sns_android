@@ -1,5 +1,8 @@
 package com.example.sns.login;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -14,9 +17,11 @@ public class LoginViewModel extends ViewModel {
 
 
 
-
-
     public void SignUP() {
+
+    }
+
+    public void Login() {
 
     }
 

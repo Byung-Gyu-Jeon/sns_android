@@ -46,7 +46,7 @@ public class LoginFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View root = inflater.inflate(R.layout.fragment_login, container, false);
-        root.findViewById(R.id.nextBtn).setOnClickListener(new View.OnClickListener() {
+        root.findViewById(R.id.Btn_Join).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(getView()).navigate(R.id.action_from_login_to_sign_email);

@@ -5,7 +5,7 @@
     android:id="@+id/signup_navigation"
     app:startDestination="@+id/navigation_signup_login_navigator">
 
-    <!--    로그인 프래그먼트-->
+    <!-- 로그인 프래그먼트 -->
     <fragment
         android:id="@+id/navigation_signup_login_navigator"
         android:name="com.example.sns.login.LoginFragment"
@@ -58,6 +58,14 @@
         android:id="@+id/navigation_name"
         android:name="com.example.sns.login.NameFragment"
         tools:layout="@layout/fragment_name" >
+        <!-- 이름 입력화면에서 로그인화면으로 이동 -->
+        <action
+            android:id="@+id/action_from_name_to_login"
+            app:destination="@id/navigation_signup_login_navigator"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"/>
     </fragment>
 
 
