@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.sns">
     <!-- <uses-permission android:name="android.permission.WAKE_LOCK" /> -->
     <!-- <uses-feature android:name="android.hardware.type.watch" /> -->
@@ -7,11 +8,13 @@
     <!-- <meta-data -->
     <!-- android:name="com.example.sns.MyGlide" -->
     <!-- android:value="GlideModule" /> -->
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
+
 
     <application
         android:name=".App"
@@ -23,6 +26,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SNS"
         android:usesCleartextTraffic="true">
+
         <activity android:name=".main.ui.chat.ChatroomActivity">
             <intent-filter>
                 <action android:name=".MainActivity" />
@@ -30,6 +34,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".main.ui.chat.CreateChatroomActivity" /> <!-- <uses-library -->
+
+        <activity android:name=".main.ui.feed.Mainprofileadd"></activity>
+        <!-- <uses-library -->
+
         <!-- android:name="com.google.android.wearable" -->
         <!-- android:required="true" /> -->
         <!--
@@ -42,6 +50,7 @@
         <activity android:name=".main.MainActivity" >
         </activity>
         <activity android:name=".main.ui.friend.FriendSearchActivity" />
+
         <activity android:name=".LoginActivity" android:theme="@style/MaterialNoActionBar"/>
         <!--<activity android:name=".JoinActivity" />
         <activity android:name=".MainLoginActivity" />-->
@@ -49,11 +58,18 @@
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" /> <!-- android:name=".main.MainActivity"  밑의 엑티비티 원래 네임 -->
+
+
+        <activity android:name=".main.ui.Myprofile.MyprofileUpdate" />
+
+
         <activity android:name=".AppLogoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <!--<activity android:name=".LoginActivity"
             android:theme="@style/MaterialNoActionBar">
@@ -77,6 +93,8 @@
                 <action android:name="com.example.sns.broadcastreceiver.topic"  ></action>
             </intent-filter>
         </receiver>-->
+
     </application>
+
 
 </manifest>

@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         navController.setGraph(R.navigation.mobile_navigation, bundle);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
-//        Navigation.findNavController(findViewById(R.id.container)).navigate(R.id.nav_host_fragment, bundle);
+//      Navigation.findNavController(findViewById(R.id.container)).navigate(R.id.nav_host_fragment, bundle);
     }
 
     public void replaceFragment(Fragment fragment) {

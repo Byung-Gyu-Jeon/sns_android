@@ -37,7 +37,11 @@ import static com.example.sns.Network.ApiClient.ourInstance;
 
 public class FriendFragment extends Fragment {
     private final String TAG = getClass().getSimpleName();
+
     private final static String BASE_URL = "http://59.13.221.12:80/sns/getlist.do/";	// 기본 Base URL
+
+    private final static String BYUNG_BASE_URL = "http://192.168.0.2:8080/sns/getlist.do/";	// 기본 Base URL
+
 
     private RetrofitService retrofitService;
     private TokenDTO tokenDTO = null;
@@ -77,7 +81,7 @@ public class FriendFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(layoutManager);
 
-        retrofitService = ourInstance.getInstance(BASE_URL, true).create(RetrofitService.class);
+        retrofitService = ourInstance.getInstance(BYUNG_BASE_URL, true).create(RetrofitService.class);
         tokenDTO = new TokenDTO();
         Call<RequestResponse> getList = retrofitService.getFriendRequestList();
         Log.d("친구목록 요청 base url : ",ourInstance.getBaseUrl());

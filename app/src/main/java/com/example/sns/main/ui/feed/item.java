@@ -1,18 +1,25 @@
 package com.example.sns.main.ui.feed;
 
+import com.example.sns.main.ui.Myprofile.FeedimagelistDATA;
+
+import java.util.List;
+
 public class item {
     private String userName;
     private String textContents;
-    private int profileImage;
-    private int imageContents;
+    //profileImage int -> string 변경
+    private String profileImage;
+    //imageContents -> List<imageContents>로 변경
+    List<FeedimagelistDATA> imageContents=null;
     private int[] multiImageContents;
     private int expandedMenuButton;
     private int likeButton;
     private int commentsButton;
     private int shareButton;
     int viewType;
+    int additemsize;
 
-    public item(String userName, String textContents, int profileImage, int imageContents, int expandedMenuButton, int likeButton, int commentsButton, int shareButton, int viewType) {
+   /* public item(String userName, String textContents, String profileImage, int imageContents, int expandedMenuButton, int likeButton, int commentsButton, int shareButton, int viewType) {
         this.userName = userName;
         this.textContents = textContents;
         this.profileImage = profileImage;
@@ -24,7 +31,7 @@ public class item {
         this.viewType = viewType;
     }
 
-    public item(String userName, String textContents, int profileImage, int[] multiImageContents, int expandedMenuButton, int likeButton, int commentsButton, int shareButton, int viewType) {
+    public item(String userName, String textContents, String profileImage, int[] multiImageContents, int expandedMenuButton, int likeButton, int commentsButton, int shareButton, int viewType) {
         this.userName = userName;
         this.textContents = textContents;
         this.profileImage = profileImage;
@@ -34,9 +41,9 @@ public class item {
         this.commentsButton = commentsButton;
         this.shareButton = shareButton;
         this.viewType = viewType;
-    }
+    }*/
 
-    public item(String userName, String textContents, int profileImage, int imageContents, int viewType) {
+    public item(String userName, String textContents, String profileImage, List<FeedimagelistDATA> imageContents, int viewType) {
         this.userName = userName;
         this.textContents = textContents;
         this.profileImage = profileImage;
@@ -44,12 +51,20 @@ public class item {
         this.viewType = viewType;
     }
 
-    public item(String userName, String textContents, int profileImage, int[] multiImageContents, int viewType) {
+    /*public item(String userName, String textContents, String profileImage, int[] multiImageContents, int viewType) {
         this.userName = userName;
         this.textContents = textContents;
         this.profileImage = profileImage;
         this.multiImageContents = multiImageContents;
         this.viewType = viewType;
+    }*/
+
+    public int getAdditemsize() {
+        return additemsize;
+    }
+
+    public void setAdditemsize(int additemsize) {
+        this.additemsize = additemsize;
     }
 
     public int getViewType() {
@@ -76,19 +91,19 @@ public class item {
         this.textContents = textContents;
     }
 
-    public int getProfileImage() {
+    public String getProfileImage() {
         return profileImage;
     }
 
-    public void setProfileImage(int profileImage) {
+    public void setProfileImage(String profileImage) {
         this.profileImage = profileImage;
     }
 
-    public int getImageContents() {
+    public List<FeedimagelistDATA> getImageContents() {
         return imageContents;
     }
 
-    public void setImageContents(int imageContents) {
+    public void setImageContents(List<FeedimagelistDATA> imageContents) {
         this.imageContents = imageContents;
     }
 

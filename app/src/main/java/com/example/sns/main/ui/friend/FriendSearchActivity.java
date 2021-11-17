@@ -43,7 +43,11 @@ public class FriendSearchActivity extends AppCompatActivity implements SearchVie
     private EditText searchEditText;
 
     RecyclerView recyclerView;
+
     private final static String BASE_URL = "http://59.13.221.12:80/sns/getSearchList.do/";	// 기본 Base URL
+
+    private final static String BYUNG_BASE_URL = "http://192.168.0.2:8080/sns/getSearchList.do/";	// 기본 Base URL
+
 
     private RetrofitService retrofitService;
 
@@ -66,7 +70,7 @@ public class FriendSearchActivity extends AppCompatActivity implements SearchVie
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
-        retrofitService = ourInstance.getInstance(BASE_URL, true).create(RetrofitService.class);
+        retrofitService = ourInstance.getInstance(BYUNG_BASE_URL, true).create(RetrofitService.class);
 
         goBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
