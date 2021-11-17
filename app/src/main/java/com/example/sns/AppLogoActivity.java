@@ -24,7 +24,7 @@ public class AppLogoActivity extends Activity {
     private TokenDTO tokenDTO = null;
 
     private final String TAG = getClass().getSimpleName();
-    private final static String BASE_URL = "http://218.148.48.169:80/sns/autologin.do/";	// 기본 Base URL
+    private final static String BASE_URL = "http://192.168.0.2:8080/sns/autologin.do/";	// 기본 Base URL
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

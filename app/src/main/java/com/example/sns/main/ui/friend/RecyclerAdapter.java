@@ -100,7 +100,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         public class ViewHolderFriendRequestList extends RecyclerView.ViewHolder implements View.OnClickListener{
             private final String TAG = getClass().getSimpleName();
-            private final static String BASE_URL = "http://218.148.48.169:80/sns/actionFriendRequest.do/";	// 기본 Base URL
+            private final static String BASE_URL = "http://192.168.0.2:8080/sns/actionFriendRequest.do/";	// 기본 Base URL
             private RetrofitService retrofitService;
             private RequestResponse requestResponse;
 
@@ -132,7 +132,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 //                profileImage.setImageResource(item.getProfileImage());
 //                GlideApp.with(context).load(item.getUserImageUrl()).apply(RequestOptions.bitmapTransform(new CropCircleWithBorderTransformation())).into(profileImage);
 //                glide.load(item.getUserImageUrl()).apply(new RequestOptions().circleCrop()).error(R.drawable.doughnut)
-                glide.load("http://218.148.48.169:80/sns/download?fileName="+item.getUserImageUrl()).apply(new RequestOptions().circleCrop()).error(R.drawable.doughnut)
+                glide.load("http://192.168.0.2:8080/sns/download?fileName="+item.getUserImageUrl()).apply(new RequestOptions().circleCrop()).error(R.drawable.doughnut)
                         .listener(new RequestListener<Drawable>() {
                             @Override
                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -244,4 +244,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 //   expandedMenuButton.setImageResource(item.getExpandedMenuButton());
             }
         }
+
+
 }

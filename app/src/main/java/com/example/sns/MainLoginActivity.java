@@ -38,7 +38,7 @@ public class MainLoginActivity extends AppCompatActivity implements View.OnClick
     private String refreshToken;
 
     private final String TAG = getClass().getSimpleName();
-    private final static String BASE_URL = "http://218.148.48.169:80/sns/login.do/";	// 기본 Base URL
+    private final static String BASE_URL = "http://192.168.0.2:8080/sns/login.do/";	// 기본 Base URL
 
     // 로그인이 성공하면 static 로그인DTO 변수에 담아서
     // 어느곳에서나 접근할 수 있게 한다
@@ -68,6 +68,7 @@ public class MainLoginActivity extends AppCompatActivity implements View.OnClick
 
         checkDangerousPermissions();
 
+        //ApiCilent 사용 spring 보안
         retrofitService = ourInstance.getInstance(BASE_URL, false).create(RetrofitService.class);
 
         userId = (EditText) findViewById(R.id.user_id);
@@ -94,6 +95,7 @@ public class MainLoginActivity extends AppCompatActivity implements View.OnClick
 
                     user.setUserId(id);
                     user.setUserPassword(password);
+                    //json -> string
                     String objJson = gson.toJson(user);
 
                     Call<User> login = retrofitService.goLoginPost(objJson);

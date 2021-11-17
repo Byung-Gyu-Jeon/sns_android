@@ -16,12 +16,18 @@
         tools:layout="@layout/fragment_friend" />
 
     <fragment
+        android:id="@+id/navigation_write"
+        android:name="com.example.sns.FeedAdd"
+        tools:layout="@layout/fragment_feed_add" />
+
+
+    <fragment
         android:id="@+id/navigation_chat"
         android:name="com.example.sns.main.ui.chat.ChatFragment"
         tools:layout="@layout/fragment_chat" />
 
     <fragment
         android:id="@+id/navigation_mypage"
-        android:name="com.example.sns.main.ui.mypage.MyPageFragment"
+        android:name="com.example.sns.main.ui.Myprofile.MyPageFragment"
         tools:layout="@layout/fragment_feed" />
 </navigation>

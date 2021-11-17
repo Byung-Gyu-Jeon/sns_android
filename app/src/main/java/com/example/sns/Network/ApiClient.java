@@ -27,6 +27,8 @@ public class ApiClient {
             if (type) {//true
                 retrofit = new Retrofit.Builder()
                         .baseUrl(BASE_URL)
+                        // 내가 추가한 코드
+                        .addConverterFactory(new NullOnEmptyConverterFactory())
                         .addConverterFactory(GsonConverterFactory.create())
                         .client(getClient())    // REST 요청 로그확인 위해 HttpLoggingInterceptor 등록
                         .build();
@@ -34,6 +36,8 @@ public class ApiClient {
             } else {
                 retrofit = new Retrofit.Builder()
                         .baseUrl(BASE_URL)
+                        // 내가 추가한 코드
+                        .addConverterFactory(new NullOnEmptyConverterFactory())
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
                 baseUrl = BASE_URL;

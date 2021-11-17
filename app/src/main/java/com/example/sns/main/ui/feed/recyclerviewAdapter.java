@@ -30,9 +30,13 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.sns.R;
+import com.example.sns.main.ui.Myprofile.FeedimagelistDATA;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import me.relex.circleindicator.CircleIndicator;
 
@@ -130,7 +134,8 @@ public class recyclerviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             textContents.setText(item.getTextContents());
             profileImage.setBackground(new ShapeDrawable(new OvalShape()));
             profileImage.setClipToOutline(true);
-            profileImage.setImageResource(item.getProfileImage());
+            //프로필 사진 gilde로 불러오기
+            Glide.with(context).load("http://192.168.0.2:8080/sns/download?fileName="+item.getProfileImage()).apply(new RequestOptions().circleCrop()).into(profileImage);
             imageContentsViewPager.setAdapter(viewPageAdapter);
             circleIndicator.setViewPager(imageContentsViewPager);
             viewPageChangeListener = new ViewPageChangeListener();
@@ -247,8 +252,11 @@ public class recyclerviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             textContents.setText(item.getTextContents());
             profileImage.setBackground(new ShapeDrawable(new OvalShape()));
             profileImage.setClipToOutline(true);
-            profileImage.setImageResource(item.getProfileImage());
-            imageContents.setImageResource(item.getImageContents());
+            //프로필 사진 gilde로 불러오기
+            Glide.with(context).load("http://192.168.0.2:8080/sns/download?fileName="+item.getProfileImage()).apply(new RequestOptions().circleCrop()).into(profileImage);
+            //메인 사진화면에 나타낼 사진이 1개일때 List형태로 저장된 사진을 꺼낸다
+            List<FeedimagelistDATA> imageContentss= item.getImageContents();
+            Glide.with(context).load("http://192.168.0.2:8080/sns/download2?fileName="+imageContentss.get(0).getImagename()).into(imageContents);
          //   expandedMenuButton.setImageResource(item.getExpandedMenuButton());
         }
     }

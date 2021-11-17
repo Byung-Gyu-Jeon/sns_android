@@ -12,20 +12,29 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.Glide;
 import com.example.sns.R;
+import com.example.sns.main.ui.Myprofile.FeedimagelistDATA;
+
+import java.util.List;
+
+
 
 public class ViewPageAdapter extends PagerAdapter {
     Context context;
     item item;
+
+    private static final String TAG4 = "FeedFragment4";
 
     public ViewPageAdapter(Context context, item item) {
         this.context = context;
         this.item = item;
     }
 
+    //기존 multiImageContents에서 item.imageContents.size()로 변경함
     @Override
     public int getCount() {
-        return item.getMultiImageContents().length;
+        return item.imageContents.size();
     }
 
     @Override
@@ -39,7 +48,15 @@ public class ViewPageAdapter extends PagerAdapter {
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.img_contents_view, container, false);
         ImageView imageView = view.findViewById(R.id.img_contents_view);
-        imageView.setImageResource(item.getMultiImageContents()[position]);
+
+        List<FeedimagelistDATA> data = item.getImageContents();
+
+
+        Log.d(TAG4,"data의 크기"+data.size());
+
+        Glide.with(context).load("http://192.168.0.2:8080/sns/download2?fileName="+data.get(position).getImagename()).into(imageView);
+
+        //imageView.setImageResource(item.getMultiImageContents()[position]);
         container.addView(view);
 
         return view;

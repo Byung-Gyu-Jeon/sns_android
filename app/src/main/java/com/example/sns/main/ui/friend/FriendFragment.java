@@ -34,7 +34,7 @@ import static com.example.sns.Network.ApiClient.ourInstance;
 
 public class FriendFragment extends Fragment {
     private final String TAG = getClass().getSimpleName();
-    private final static String BASE_URL = "http://218.148.48.169:80/sns/getlist.do/";	// 기본 Base URL
+    private final static String BASE_URL = "http://192.168.0.2:8080/sns/getlist.do/";	// 기본 Base URL
 
     private RetrofitService retrofitService;
     private TokenDTO tokenDTO = null;
