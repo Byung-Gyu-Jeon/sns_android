@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import io.realm.Realm;
+import io.realm.RealmObject;
+
 public class User {
     @SerializedName("tokenDTO")
     private TokenDTO tokenDTO;

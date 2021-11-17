@@ -4,12 +4,14 @@ import com.example.sns.App;
 
 import java.io.IOException;
 
+import io.reactivex.plugins.RxJavaPlugins;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
@@ -28,6 +30,7 @@ public class ApiClient {
                 retrofit = new Retrofit.Builder()
                         .baseUrl(BASE_URL)
                         .addConverterFactory(GsonConverterFactory.create())
+                        .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) // 9/29 stomp 구현을 위해 추가
                         .client(getClient())    // REST 요청 로그확인 위해 HttpLoggingInterceptor 등록
                         .build();
                 baseUrl = BASE_URL;

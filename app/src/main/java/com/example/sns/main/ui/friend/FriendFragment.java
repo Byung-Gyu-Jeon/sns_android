@@ -10,8 +10,10 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.ui.AppBarConfiguration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +24,7 @@ import com.example.sns.Model.TokenDTO;
 import com.example.sns.Network.ApiClient;
 import com.example.sns.Network.RetrofitService;
 import com.example.sns.R;
+import com.example.sns.main.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +37,7 @@ import static com.example.sns.Network.ApiClient.ourInstance;
 
 public class FriendFragment extends Fragment {
     private final String TAG = getClass().getSimpleName();
-    private final static String BASE_URL = "http://218.148.48.169:80/sns/getlist.do/";	// 기본 Base URL
+    private final static String BASE_URL = "http://59.13.221.12:80/sns/getlist.do/";	// 기본 Base URL
 
     private RetrofitService retrofitService;
     private TokenDTO tokenDTO = null;
@@ -50,7 +53,7 @@ public class FriendFragment extends Fragment {
 
     // 각각의 Fragment마다 Instance를 반환해 줄 메소드를 생성합니다.
     public static FriendFragment newInstance() {
-        return new FriendFragment();
+        return new FriendFragment() ;
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -121,7 +124,8 @@ public class FriendFragment extends Fragment {
             public void onFailure(Call<RequestResponse> call, Throwable t) {
                 // 통신 실패(인터넷 끊김, 예외 발생 등 시스템적 이유)
                 Log.d("onFail","Fail msg : " + t.getMessage());
-                Toast.makeText(getContext(), "인터넷 연결이 원활하지 않습니다.", Toast.LENGTH_SHORT).show();
+                if(getContext() != null)
+                    Toast.makeText(getContext(), "인터넷 연결이 원활하지 않습니다.", Toast.LENGTH_SHORT).show();
             }
         });
 

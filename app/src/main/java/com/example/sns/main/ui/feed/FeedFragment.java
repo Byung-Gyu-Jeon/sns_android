@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sns.R;
+import com.example.sns.main.MainActivity;
 
 public class FeedFragment extends Fragment {
 
@@ -26,6 +28,12 @@ public class FeedFragment extends Fragment {
             ViewGroup container, Bundle savedInstanceState) {
         feedViewModel = new ViewModelProvider(this).get(FeedViewModel.class);
         View root = inflater.inflate(R.layout.fragment_feed, container, false);
+
+        // 10/04 임시 툴바 테스트
+        Toolbar toolbar = root.findViewById(R.id.main_toolbar);
+        ((MainActivity) getActivity()).getSupportActionBar().hide();
+        ((MainActivity) getActivity()).setSupportActionBar(toolbar);
+
         // 여기에다가 실제코드 작성
         recyclerView = (RecyclerView) root.findViewById(R.id.recyclerview1);
 

@@ -9,6 +9,8 @@ public class TokenRequestDTO {
     private String accessToken;
     @SerializedName("refreshToken")
     private String refreshToken;
+    @SerializedName("userNo")
+    private Long userNo;
     @SerializedName("type")
     private int type; // 0-> acessToken만 갱신, 1 -> refreshToken도 갱신.. 자동로그인시 3 -> 재로그인 필요
 
@@ -40,5 +42,13 @@ public class TokenRequestDTO {
 
     public void setTokenDTO(TokenDTO tokenDTO) {
         this.tokenDTO = tokenDTO;
+    }
+
+    public Long getUserNo() {
+        return userNo;
+    }
+
+    public void setUserNo(Long userNo) {
+        this.userNo = userNo;
     }
 }

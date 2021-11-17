@@ -2,6 +2,7 @@ package com.example.sns.login;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.text.method.HideReturnsTransformationMethod;
@@ -30,6 +31,8 @@ public class PWFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private LoginViewModel viewModel;
+
     public static PWFragment newInstance(String param1, String param2) {
         PWFragment fragment = new PWFragment();
         Bundle args = new Bundle();
@@ -55,6 +58,7 @@ public class PWFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_p_w, container, false);
+        viewModel = new ViewModelProvider(getActivity()).get(LoginViewModel.class);
 
         CheckBox checkBox = root.findViewById(R.id.checkBox);
         EditText editTextTextPersonName4 = root.findViewById(R.id.editTextTextPersonName4);
@@ -75,6 +79,7 @@ public class PWFragment extends Fragment {
         root.findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                viewModel.passWord.setValue(editTextTextPersonName4.getText().toString());
                 Navigation.findNavController(getView()).navigate(R.id.action_from_pw_to_sign_name);
             }
         });

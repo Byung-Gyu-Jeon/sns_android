@@ -89,7 +89,7 @@
             app:layout_constraintTop_toBottomOf="@id/text_contents" />
 
         <TextView
-            android:id="@+id/photo_order_text"
+            android:id="@+id/chat_numbers_received_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -173,8 +173,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_chatbox_outline"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
             android:text="@string/comments_button"
+            android:background="@android:color/transparent"
             android:textColor="#666362"
             app:rippleColor="#D1D0CE"
             app:cornerRadius="0dp"
@@ -188,9 +189,10 @@
             android:id="@+id/share_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
             android:drawableLeft="@drawable/ic_baseline_share_32"
             android:text="@string/share_button"
+            android:background="@android:color/transparent"
             android:textColor="#666362"
             app:rippleColor="#D1D0CE"
             app:cornerRadius="0dp"

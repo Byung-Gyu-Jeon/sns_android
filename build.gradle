@@ -3,9 +3,16 @@ buildscript {
     repositories {
         google()
         jcenter()
+
     }
     dependencies {
         classpath "com.android.tools.build:gradle:4.1.3"
+
+        //11.04 firebase sdk 추가
+        classpath 'com.google.gms:google-services:4.3.10'
+
+        //10.6 realm db 추가
+        classpath "io.realm:realm-gradle-plugin:10.8.0"
 
         // Safe Args 사용
         def nav_version = "2.3.5"
@@ -20,6 +27,12 @@ allprojects {
     repositories {
         google()
         jcenter()
+
+        //10.6 realm db 추가
+        mavenCentral()
+
+        // 9.29 android stomp 라이브러리 (jitpack repo 추가)
+        maven { url "https://jitpack.io" }
     }
 }
 

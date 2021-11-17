@@ -4,17 +4,23 @@ import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.example.sns.R;
 import com.example.sns.databinding.FragmentNameBinding;
 
 import org.jetbrains.annotations.NotNull;
+
+import static android.content.ContentValues.TAG;
 
 public class NameFragment extends Fragment {
 
@@ -25,6 +31,7 @@ public class NameFragment extends Fragment {
     private String mParam2;
     FragmentNameBinding bind;
 
+    private LoginViewModel viewModel;
 
     public NameFragment() {
         // Required empty public constructor
@@ -50,14 +57,40 @@ public class NameFragment extends Fragment {
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        bind = DataBindingUtil.inflate(inflater,R.layout.fragment_name, container, false);
+//        bind = DataBindingUtil.inflate(inflater,R.layout.fragment_name, container, false);
+        View root = inflater.inflate(R.layout.fragment_name, container, false);
+        viewModel = new ViewModelProvider(getActivity()).get(LoginViewModel.class);
 
-        bind.getRoot().findViewById(R.id.Btn_Sign).setOnClickListener(new View.OnClickListener() {
+        EditText editTextName = root.findViewById(R.id.editText_name);
+        ProgressBar progressBar = root.findViewById(R.id.Sign_progressBar);
+
+//        viewModel.enableButton(true, LoginViewModel.NAME);
+
+//        bind.getRoot().findViewById(R.id.Btn_Sign).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                viewModel.name.setValue(editTextName.getText().toString());
+//                Log.d(TAG, "onClick: " + viewModel.eMail.getValue());
+//                Log.d(TAG, "onClick: " + viewModel.passWord.getValue());
+//                Log.d(TAG, "onClick: " + viewModel.name.getValue());
+//                Navigation.findNavController(getView()).navigate(R.id.action_from_email_to_sign_pw);
+//            }
+//        });
+//        return bind.getRoot();
+        root.findViewById(R.id.Btn_Sign).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(getView()).navigate(R.id.action_from_email_to_sign_pw);
+                viewModel.name.setValue(editTextName.getText().toString());
+                progressBar.setVisibility(View.VISIBLE);
+
+                viewModel.SignUP(getView());
+
+                Log.d(TAG, "onClick: " + viewModel.eMail.getValue());
+                Log.d(TAG, "onClick: " + viewModel.passWord.getValue());
+                Log.d(TAG, "onClick: " + viewModel.name.getValue());
+//                Navigation.findNavController(getView()).navigate(R.id.action_from_name_to_login);
             }
         });
-        return bind.getRoot();
+        return root;
     }
 }

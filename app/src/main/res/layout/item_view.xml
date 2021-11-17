@@ -147,8 +147,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_chatbox_outline"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
             android:text="@string/comments_button"
+            android:background="@android:color/transparent"
             android:textColor="#666362"
             app:rippleColor="#D1D0CE"
             app:cornerRadius="0dp"
@@ -162,11 +163,12 @@
             android:id="@+id/share_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
             android:drawableLeft="@drawable/ic_baseline_share_32"
             android:text="@string/share_button"
+            android:background="@android:color/transparent"
             android:textColor="#666362"
-            app:rippleColor="#D1D0CE"
+            app:rippleColor="#666362"
             app:cornerRadius="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/comments_button"
@@ -177,3 +179,7 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--
+style="@style/Widget.MaterialComponents.Button.TextButton" <- materialButton 속성이었음 9/12부 android:textAppearance="@style/TextAppearance.MaterialComponents.Button" 로 대체함
+-->

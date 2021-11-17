@@ -110,7 +110,7 @@ public class SearchRecyclerAdapter  extends RecyclerView.Adapter<RecyclerView.Vi
             if(item.getUserImageUrl() == null)
                 profileImage.setImageResource(R.drawable.doughnut);
             else
-                glide.load("http://218.148.48.169:80/sns/download?fileName="+item.getUserImageUrl()).apply(new RequestOptions().circleCrop()).error(R.drawable.doughnut)
+                glide.load("http://59.13.221.12:80/sns/download?fileName="+item.getUserImageUrl()).apply(new RequestOptions().circleCrop()).error(R.drawable.doughnut)
                         .listener(new RequestListener<Drawable>() {
                             @Override
                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {

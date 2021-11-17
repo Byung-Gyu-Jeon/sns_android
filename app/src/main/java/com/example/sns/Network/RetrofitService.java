@@ -1,8 +1,15 @@
 package com.example.sns.Network;
 
+import com.example.sns.Model.ChatMsgDTO;
+import com.example.sns.Model.ChatRoomDTO;
 import com.example.sns.Model.RequestResponse;
 import com.example.sns.Model.TokenRequestDTO;
 import com.example.sns.Model.User;
+
+import java.util.List;
+
+import io.reactivex.Completable;
+import io.reactivex.Flowable;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -42,7 +49,7 @@ public interface RetrofitService {
 
     @FormUrlEncoded
     @POST("posts")
-    Call<User> goLoginPost(@Field("objJson") String objJson);
+    Call<User> goLoginPost(@Field("objJson") String objJson, @Field("fcmToken") String fcmToken);
 
     @FormUrlEncoded
     @POST("posts")
@@ -53,5 +60,21 @@ public interface RetrofitService {
 
     @FormUrlEncoded
     @POST("posts")
-    Call<ResponseBody> goPost(@Field("objJson") String objJson);
+    Call<RequestResponse> goSignUp(@Field("objJson") String objJson);
+
+    //9/29 임시 테스트 추가
+//    @POST("hello-convert-and-send")
+//    Completable sendRestEcho(@Query("msg") String message, @Query("roomId") String roomId);
+    @FormUrlEncoded
+    @POST("hello-convert-and-send")
+    Completable sendRestEcho(@Field("objJson") String objJson);
+
+
+    @FormUrlEncoded
+    @POST("posts")
+    Call<RequestResponse> setChatRoom(@Field("objJson") String objJson);
+
+    @FormUrlEncoded
+    @POST("posts")
+    Call<RequestResponse> sendFcmTokenToServer(@Field("token") String token, @Field("userNo") Long userNo);
 }

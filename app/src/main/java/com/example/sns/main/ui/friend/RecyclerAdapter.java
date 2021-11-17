@@ -3,8 +3,6 @@ package com.example.sns.main.ui.friend;
 import android.content.Context;
 
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.OvalShape;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +23,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 
 import com.example.sns.App;
-import com.example.sns.MainLoginActivity;
 import com.example.sns.Model.RequestResponse;
 import com.example.sns.Model.TokenDTO;
 import com.example.sns.Network.RetrofitService;
@@ -100,7 +97,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         public class ViewHolderFriendRequestList extends RecyclerView.ViewHolder implements View.OnClickListener{
             private final String TAG = getClass().getSimpleName();
-            private final static String BASE_URL = "http://218.148.48.169:80/sns/actionFriendRequest.do/";	// 기본 Base URL
+            private final static String BASE_URL = "http://59.13.221.12:80/sns/actionFriendRequest.do/";	// 기본 Base URL
             private RetrofitService retrofitService;
             private RequestResponse requestResponse;
 
@@ -115,7 +112,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
                 retrofitService = ourInstance.getInstance(BASE_URL, true).create(RetrofitService.class);
 
-                userName = itemView.findViewById(R.id.textView1);
+                userName = itemView.findViewById(R.id.user_name_text);
                 profileImage = itemView.findViewById(R.id.img_profile_friend_request);
                 acceptButton = itemView.findViewById(R.id.button1);
                 deleteButton = itemView.findViewById(R.id.button2);
@@ -132,7 +129,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 //                profileImage.setImageResource(item.getProfileImage());
 //                GlideApp.with(context).load(item.getUserImageUrl()).apply(RequestOptions.bitmapTransform(new CropCircleWithBorderTransformation())).into(profileImage);
 //                glide.load(item.getUserImageUrl()).apply(new RequestOptions().circleCrop()).error(R.drawable.doughnut)
-                glide.load("http://218.148.48.169:80/sns/download?fileName="+item.getUserImageUrl()).apply(new RequestOptions().circleCrop()).error(R.drawable.doughnut)
+                glide.load("http://59.13.221.12:80/sns/download?fileName="+item.getUserImageUrl()).apply(new RequestOptions().circleCrop()).error(R.drawable.doughnut)
                         .listener(new RequestListener<Drawable>() {
                             @Override
                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {

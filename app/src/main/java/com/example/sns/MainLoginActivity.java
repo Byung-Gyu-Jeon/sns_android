@@ -1,5 +1,6 @@
 package com.example.sns;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -14,12 +15,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.sns.Model.ChatRoomDTO;
+import com.example.sns.Model.RealmUser;
 import com.example.sns.Model.SharedPreferenceManager;
 import com.example.sns.Model.TokenDTO;
 import com.example.sns.Model.User;
 import com.example.sns.Network.ApiClient;
 import com.example.sns.Network.RetrofitService;
 import com.example.sns.main.MainActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -30,6 +36,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.content.ContentValues.TAG;
 import static com.example.sns.Network.ApiClient.ourInstance;
 
 public class MainLoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -37,12 +44,12 @@ public class MainLoginActivity extends AppCompatActivity implements View.OnClick
     private String token;
     private String refreshToken;
 
-    private final String TAG = getClass().getSimpleName();
-    private final static String BASE_URL = "http://218.148.48.169:80/sns/login.do/";	// 기본 Base URL
+    private final static String BASE_URL = "http://59.13.221.12:80/sns/login.do/";	// 기본 Base URL
 
     // 로그인이 성공하면 static 로그인DTO 변수에 담아서
     // 어느곳에서나 접근할 수 있게 한다
     public static User user = null;
+    private RealmUser realmUser = null;
 
 //    private ApiClient apiClient;
     private RetrofitService retrofitService;
@@ -55,12 +62,25 @@ public class MainLoginActivity extends AppCompatActivity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 //        app = (App) getApplicationContext();
-        try {
-            token = App.sharedPreferenceManager.getToken();
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-            Log.d("token","생성한 토큰이 없음");
-        }
+//        try {
+//            token = App.sharedPreferenceManager.getToken();
+//        } catch (NullPointerException e) {
+//            e.printStackTrace();
+//            Log.d("token","생성한 토큰이 없음");
+//        }
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                        token = task.getResult();
+                    }
+                });
 
 
         super.onCreate(savedInstanceState);
@@ -89,6 +109,7 @@ public class MainLoginActivity extends AppCompatActivity implements View.OnClick
                         userPassword.getText().toString().length() != 0) {  //아이디와 비밀번호의 길이가 0이 아니면
                     Gson gson = new Gson();
                     user = new User();
+                    realmUser = new RealmUser();
                     String id = userId.getText().toString();
                     String password = userPassword.getText().toString();
 
@@ -96,7 +117,9 @@ public class MainLoginActivity extends AppCompatActivity implements View.OnClick
                     user.setUserPassword(password);
                     String objJson = gson.toJson(user);
 
-                    Call<User> login = retrofitService.goLoginPost(objJson);
+                    // Log and toast
+                    Log.d(TAG, token);
+                    Call<User> login = retrofitService.goLoginPost(objJson, token);
                     login.enqueue(new Callback<User>() {
                         @Override
                         public void onResponse(Call<User> call, Response<User> response) {
@@ -117,11 +140,33 @@ public class MainLoginActivity extends AppCompatActivity implements View.OnClick
                                             refreshToken = tokenDTO.getRefreshToken();
                                             user.getUserNo();
                                             user.getUserRole();
+
+                                            realmUser.setUserId(user.getUserId()); // 10/24 서버에서 값을 보내주지 않기때문에 null값임
+                                            realmUser.setUserImageUrl(user.getUserImageUrl());
+                                            realmUser.setUserIntroduction(user.getUserIntroduction());
+                                            realmUser.setUserName(user.getUserName());
+                                            realmUser.setUserNo(user.getUserNo());
+
                                             Log.d("전달받은값",token + " , " + user.getUserRole() + " , " + user.getUserNo());
                                             App.sharedPreferenceManager.setToken(token);
 //                                            App.sharedPreferenceManager.setAccessTokenExpiresIn(tokenDTO.getAccessTokenExpiresIn());
                                             App.sharedPreferenceManager.setRefreshToken(refreshToken);
 //                                            App.sharedPreferenceManager.setRefreshTokenExpiresIn(tokenDTO.getRefreshTokenExpireIn());
+                                            App.sharedPreferenceManager.setUserNo(user.getUserNo());
+
+                                            if (App.sharedPreferenceManager.getFcmToken() == null)
+                                                App.sharedPreferenceManager.setFcmToken(token);
+
+                                            RealmUser loginUser = App.realm.where(RealmUser.class).findFirst();
+                                            if(loginUser == null) {
+                                                App.realm.executeTransactionAsync(transactionRealm -> {
+                                                    transactionRealm.insert(realmUser);
+                                                });
+                                            }
+//                                            App.realm.beginTransaction();
+//                                            RealmUser manageUser = App.realm.copyToRealm(realmUser);
+//                                            App.realm.commitTransaction();
+
                                             try {
                                                 token = App.sharedPreferenceManager.getToken();
                                                 Log.d("token","pref에 저장된 토큰 값 : " + token);

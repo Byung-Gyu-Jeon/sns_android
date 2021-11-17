@@ -2,12 +2,10 @@ package com.example.sns.main.ui.feed;
 
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -25,8 +23,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
@@ -113,7 +109,7 @@ public class recyclerviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             userName = itemView.findViewById(R.id.user_name);
             textContents = itemView.findViewById(R.id.text_contents);
             profileImage = itemView.findViewById(R.id.img_profile);
-            photoOrderText = itemView.findViewById(R.id.photo_order_text);
+            photoOrderText = itemView.findViewById(R.id.chat_numbers_received_text);
             expandedMenuButton = itemView.findViewById(R.id.expanded_menuButton);
             likeButton = itemView.findViewById(R.id.like_button);
             commentsButton = itemView.findViewById(R.id.comments_button);

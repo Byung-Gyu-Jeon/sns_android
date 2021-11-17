@@ -6,11 +6,13 @@ import android.content.SharedPreferences;
 public class SharedPreferenceManager {
     private static SharedPreferenceManager instance;
     private SharedPreferences prefs;
+    private final String USER_NO = "userNo";
     private final String PREFERENCES_NAME = "preference";
     private final String TOKEN = "token";
     private final String REFRESH_TOKEN = "refreshToken";
     private final String ACCESS_TOKEN_EXPIRES_IN = "accessTokenExpiresIn";
     private final String REFRESH_TOKEN_EXPIRES_IN = "refreshTokenExpiresIn";
+    private final String FCM_TOKEN = "fcmToken";
     private static SharedPreferences.Editor prefsEditor;
 
     private SharedPreferenceManager() {}
@@ -25,6 +27,13 @@ public class SharedPreferenceManager {
             instance = new SharedPreferenceManager(context);
         return instance;
     }
+
+    public void setUserNo(Long value) {
+        prefsEditor.putLong(USER_NO, value);
+        prefsEditor.commit();
+    }
+
+    public Long getUserNo() { return prefs.getLong(USER_NO, 0);}
 
     public void setToken(String value) {
         prefsEditor.putString(TOKEN, value);
@@ -57,4 +66,11 @@ public class SharedPreferenceManager {
     }
 
     public Long getRefreshTokenExpiresIn() {return prefs.getLong(REFRESH_TOKEN_EXPIRES_IN, 0); }
+
+    public String getFcmToken() {return prefs.getString(FCM_TOKEN, ""); }
+
+    public void setFcmToken(String fcmToken) {
+        prefsEditor.putString(FCM_TOKEN, fcmToken);
+        prefsEditor.commit();
+    }
 }

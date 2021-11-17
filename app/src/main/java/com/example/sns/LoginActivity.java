@@ -21,6 +21,4 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
-
-//    private LoginViewModel loginViewModel()
 }

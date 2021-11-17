@@ -24,7 +24,7 @@ public class AppLogoActivity extends Activity {
     private TokenDTO tokenDTO = null;
 
     private final String TAG = getClass().getSimpleName();
-    private final static String BASE_URL = "http://218.148.48.169:80/sns/autologin.do/";	// 기본 Base URL
+    private final static String BASE_URL = "http://59.13.221.12:80/sns/autologin.do/";	// 기본 Base URL
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class AppLogoActivity extends Activity {
 
         if(App.sharedPreferenceManager.getRefreshToken() == null) {
             Intent intent;
-            intent = new Intent(AppLogoActivity.this, MainLoginActivity.class);
+            intent = new Intent(AppLogoActivity.this, LoginActivity.class);
             startActivity(intent);   // 로그인 화면으로...
         } else if(App.sharedPreferenceManager.getToken() != null) { //access, refresh 토큰 둘다 가지고 있으면..
             // autologin 호출
@@ -54,6 +54,7 @@ public class AppLogoActivity extends Activity {
                         if(tokenDTO.getCode() == 4700) { //인증 성공 (토큰 갱신 ㅇ)
                             App.sharedPreferenceManager.setToken(tokenDTO.getAccessToken());
                             App.sharedPreferenceManager.setRefreshToken(tokenDTO.getRefreshToken());
+                            App.sharedPreferenceManager.setUserNo(tokenRequestDTO.getUserNo());
 
                             Intent intent;
                             intent = new Intent(AppLogoActivity.this, MainActivity.class);
@@ -61,7 +62,7 @@ public class AppLogoActivity extends Activity {
                         } else if (tokenDTO.getCode() == 5100){
                             Log.d("responseFail","failed to reissue.." );
                             Intent intent;
-                            intent = new Intent(AppLogoActivity.this, MainLoginActivity.class);
+                            intent = new Intent(AppLogoActivity.this, LoginActivity.class);
                             startActivity(intent);
                         }
                     } else {
