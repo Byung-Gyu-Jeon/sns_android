@@ -1,11 +1,13 @@
 package com.example.sns.main.ui.feed;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityManager;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +32,7 @@ import com.example.sns.main.MainActivity;
 import com.example.sns.main.ui.Myprofile.FeedimagelistDATA;
 import com.example.sns.main.ui.Myprofile.MyProfileDTO;
 import com.example.sns.main.ui.feed.FeedViewModel;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,6 +52,9 @@ public class FeedFragment extends Fragment {
     RecyclerView recyclerView;
     private String token;
 
+    //스프링에서 뽑아낸 내 고유 userno;
+    int spring_my_userno;
+
     List<FeedimagelistDATA> dataList = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -67,6 +73,8 @@ public class FeedFragment extends Fragment {
 
 
 
+
+
         // db에서 feed번호와 사진들을 가져온다
         retrofitService = ourInstance.getInstance(BYUNG_BASE_URL,true).create(RetrofitService.class);
 
@@ -75,6 +83,7 @@ public class FeedFragment extends Fragment {
             @Override
             public void onResponse(Call<MyProfileDTO> call, Response<MyProfileDTO> response) {
                 if(response.isSuccessful()){
+                    Log.d(TAG,"서버와 통신 성공");
                     MyProfileDTO dto = response.body();
 
                     for(int i=0;i<dto.list.size();i++){
@@ -89,8 +98,14 @@ public class FeedFragment extends Fragment {
                         Log.d(TAG,data.getFeedcontent());
                         data.setMyimagename(dto.list.get(i).getMyimagename());
                         Log.d(TAG,data.getMyimagename());
-                        dataList.add(data);
+                        data.setUserno(dto.list.get(i).getUserno());
+                        Log.d(TAG,+data.getUserno()+"");
+                        data.setFeedlikecount(dto.list.get(i).getFeedlikecount());
+                        Log.d(TAG,"좋아요 갯수"+dto.list.get(i).getFeedlikecount()+"");
+                        spring_my_userno = dto.getSpring_my_userno();
+                        Log.d(TAG,"스프링에서 뽑아낸 내 고유 user_no"+spring_my_userno);
 
+                        dataList.add(data);
                     }
                 /*
                     //dataList 내용물 로그 찍기
@@ -132,6 +147,8 @@ public class FeedFragment extends Fragment {
 
                         }
                         else{
+
+
                            /* Log.d(TAG2,"+++++++++dataList2의 피드번호:"+dataList2.get(i-1).getFeedno()+"");
                             Log.d(TAG2,"+++++++++dataList2의 feed 텍스트:"+dataList2.get(i-1).getFeedcontent());
                             Log.d(TAG2,"+++++++++dataList2의 프로필 사진이름:"+dataList2.get(i-1).getMyimagename());
@@ -211,21 +228,27 @@ public class FeedFragment extends Fragment {
                         else if(count!=0){
                             viewtype=1;
                         }
-                        adapter.addItem(new item(dataList2.get(i).getUsername(),dataList2.get(i).getFeedcontent(),dataList2.get(i).getMyimagename(),dataList4, viewtype));
-                        Log.d(TAG3,i+"번째"+"dataList4의 크기:"+dataList4.size());
+                        int feedno = dataList2.get(i).getFeedno();
+                        int userno = dataList.get(i).getUserno();
+                        int feedlikecount = dataList.get(i).getFeedlikecount();
+                        adapter.addItem(new item(dataList2.get(i).getUsername(),dataList2.get(i).getFeedcontent(),dataList2.get(i).getMyimagename(),dataList4, viewtype,feedno,userno,feedlikecount,spring_my_userno));
+                        //Log.d(TAG3,i+"번째"+"dataList4의 크기:"+dataList4.size());
+                        Log.d(TAG3,i+"번째 피드번호:"+feedno);
                     }
 
                     recyclerView.setAdapter(adapter);
                 }
+
             }
 
             @Override
             public void onFailure(Call<MyProfileDTO> call, Throwable t) {
+                Log.d(TAG,"서버와 통신 실패");
                 Toast.makeText(getContext(),"서버에서 응답을 받지 못하였습니다",Toast.LENGTH_SHORT).show();
             }
         });
 
-        
+
 
         /*adapter.addItem(new item("홍길동","안녕",R.mipmap.ic_cat_round, R.drawable.doughnut, 0));
         adapter.addItem(new item("철수","하이",R.mipmap.ic_lyan1_round, R.drawable.doughnut, 0));

@@ -47,6 +47,9 @@ public class LoginViewModel extends ViewModel {
 
     private final static String BASE_URL_LOGIN = "http://59.13.221.12:80/sns/login.do/";	// 기본 Base URL
     private static final String BASE_URL_JOIN = "http://59.13.221.12:80/sns/singup.do/";	// 기본 Base URL
+
+    private final static String BYUNG_BASE_URL="http://192.168.0.2:8080/sns/login.do/";
+    private final static String BYUNG_BASE_URL1="http://192.168.0.2:8080/sns/singup.do/";
     private RetrofitService retrofitService;
     private RequestResponse requestResponse;
     private String fcmToken;
@@ -58,7 +61,7 @@ public class LoginViewModel extends ViewModel {
     public void SignUP(View view) {
         Log.d(TAG, "SignUP: Sign up 실행");
 
-        retrofitService = ourInstance.getInstance(BASE_URL_JOIN, false).create(RetrofitService.class);
+        retrofitService = ourInstance.getInstance(BYUNG_BASE_URL1, false).create(RetrofitService.class);
 
         Gson gson = new Gson();
         User user = new User();
@@ -115,7 +118,7 @@ public class LoginViewModel extends ViewModel {
     public void Login(View view) {
         Log.d(TAG, "Login 실행");
 
-        retrofitService = ourInstance.getInstance(BASE_URL_LOGIN, false).create(RetrofitService.class);
+        retrofitService = ourInstance.getInstance(BYUNG_BASE_URL, false).create(RetrofitService.class);
 
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(task -> {

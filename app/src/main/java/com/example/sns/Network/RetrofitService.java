@@ -6,6 +6,7 @@ import com.example.sns.Model.RequestResponse;
 import com.example.sns.Model.TokenRequestDTO;
 import com.example.sns.Model.User;
 import com.example.sns.main.ui.Myprofile.MyProfileDTO;
+import com.example.sns.main.ui.feed.CommenttextDATA;
 import com.example.sns.main.ui.feed.MyFeedaddDATA;
 
 import java.util.List;
@@ -122,5 +123,30 @@ public interface RetrofitService {
     @FormUrlEncoded
     @POST("gets")
     Call<MyProfileDTO> getData2(@Field("num") String num);
+
+    //댓글 화면에서 댓글 작성시 1.댓글의 내용을 서버로 보내기 위한 코드 2.댓글이 작성된 시간
+    @Multipart
+    @POST("post3")
+    Call<CommenttextDATA> postData4(@PartMap Map<String,RequestBody> requestMapp);
+
+    //댓글화면에서 필요한 1.프로필 사진이름 2. 내 이름 3.댓글 내용 4.댓글 작성 시간을 가져온다
+    @FormUrlEncoded
+    @POST("gets")
+    Call<MyProfileDTO> getData3(@Field("num") String num);
+
+    //답글 화면에서 내가 작성한 답글을 서버에 보내기 위해서 사용 1. 댓글 내용, 2.comments_no, 3.답글 작성한 시각
+    @Multipart
+    @POST("post4")
+    Call<CommenttextDATA> postData5(@PartMap Map<String,RequestBody> recommentdata);
+
+    //답글화면에서 필요한 1.프로필사진 2. 내 이름 3. 답글 내용과 4. 답글 작성시간을 가져온다
+    @FormUrlEncoded
+    @POST("gets")
+    Call<MyProfileDTO> getData4(@Field("commentsno") String commentsno);
+
+    //메인 화면에서 좋아요 버튼을 눌렀을때 서버로 feedno 전송
+    @FormUrlEncoded
+    @POST("feedlike")
+    Call<MyProfileDTO> postData6(@Field("feedno") String feedno,@Field("like_btn_state") String like_btn_State);
 
 }

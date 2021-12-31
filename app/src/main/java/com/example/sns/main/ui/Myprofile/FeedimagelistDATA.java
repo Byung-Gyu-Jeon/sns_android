@@ -19,6 +19,39 @@ public class FeedimagelistDATA {
     @SerializedName("myimagename")
     private String myimagename;
 
+    @SerializedName("userno")
+    private int userno;
+
+    @SerializedName("feedlikecount")
+    private int feedlikecount;
+
+    @SerializedName("feed_like_feed_no")
+    private int feed_like_feed_no;
+
+    public int getFeed_like_feed_no() {
+        return feed_like_feed_no;
+    }
+
+    public void setFeed_like_feed_no(int feed_like_feed_no) {
+        this.feed_like_feed_no = feed_like_feed_no;
+    }
+
+    public int getFeedlikecount() {
+        return feedlikecount;
+    }
+
+    public void setFeedlikecount(int feedlikecount) {
+        this.feedlikecount = feedlikecount;
+    }
+
+    public int getUserno() {
+        return userno;
+    }
+
+    public void setUserno(int userno) {
+        this.userno = userno;
+    }
+
     public String getUsername() {
         return username;
     }

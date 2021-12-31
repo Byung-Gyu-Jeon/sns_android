@@ -33,7 +33,7 @@
         android:id="@+id/imageView8"
         android:layout_width="60dp"
         android:layout_height="61dp"
-        android:layout_marginStart="14dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="28dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageButton6"
@@ -47,7 +47,7 @@
         android:layout_marginTop="30dp"
         android:text="User1"
         android:textColor="@color/black"
-        android:textSize="17dp"
+        android:textSize="15dp"
         app:layout_constraintStart_toEndOf="@+id/imageView8"
         app:layout_constraintTop_toBottomOf="@+id/textView27" />
 
@@ -59,17 +59,17 @@
         android:layout_marginTop="30dp"
         android:text="1시간전"
         android:textColor="@color/black"
-        android:textSize="17dp"
+        android:textSize="15dp"
         app:layout_constraintStart_toEndOf="@+id/textView28"
         app:layout_constraintTop_toBottomOf="@+id/textView27" />
 
     <TextView
         android:id="@+id/textView30"
-        android:layout_width="280dp"
-        android:layout_height="45dp"
+        android:layout_width="288dp"
+        android:layout_height="48dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="5dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:text="끝까지 찿이 다녀도 목숨이 있는 때까지 방황하여도 보이는 것은 거친 모래뿐일 것이다"
         android:textColor="@color/black"
         android:textSize="15dp"
@@ -109,15 +109,15 @@
 
 
     <EditText
-        android:id="@+id/editText"
-        android:layout_width="285dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="8dp"
+        android:id="@+id/editText33"
+        android:layout_width="269dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="12dp"
+        android:background="@android:color/transparent"
         android:hint="답글 달기..."
         android:textColor="@color/black"
-        android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView18"
         app:layout_constraintTop_toBottomOf="@+id/view5" />
@@ -186,7 +186,7 @@
         android:id="@+id/imageView18"
         android:layout_width="43dp"
         android:layout_height="40dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="7dp"
         android:layout_marginBottom="16dp"
@@ -198,15 +198,17 @@
         app:srcCompat="@drawable/cat" />
 
     <ImageButton
+        android:id="@+id/imageButton4"
         android:layout_width="39dp"
         android:layout_height="36dp"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="2dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:src="@drawable/sebtn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/editText"
         app:layout_constraintTop_toBottomOf="@+id/view5" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

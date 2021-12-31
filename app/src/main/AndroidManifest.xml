@@ -36,6 +36,8 @@
         <activity android:name=".main.ui.chat.CreateChatroomActivity" /> <!-- <uses-library -->
 
         <activity android:name=".main.ui.feed.Mainprofileadd"></activity>
+        <activity android:name=".main.ui.feed.CommentActivity"></activity>
+        <activity android:name=".main.ui.feed.Recomment.RecommentActivity" android:windowSoftInputMode="adjustPan"></activity>
         <!-- <uses-library -->
 
         <!-- android:name="com.google.android.wearable" -->

@@ -2,6 +2,7 @@ package com.example.sns.main.ui.feed;
 
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ShapeDrawable;
@@ -28,17 +29,29 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.sns.Network.ApiClient;
+import com.example.sns.Network.RetrofitService;
 import com.example.sns.R;
 import com.example.sns.main.ui.Myprofile.FeedimagelistDATA;
+import com.example.sns.main.ui.Myprofile.MyProfileDTO;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import me.relex.circleindicator.CircleIndicator;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class recyclerviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     Context context;
     ArrayList<item> items = new ArrayList<item>();
+
+    private RetrofitService retrofitService;
+    private final static String BASE_URL="http://192.168.0.2:8080/sns/postfeedlike/";
+    public static ApiClient ourInstance = null;
+    private static final String TAG = "recyclerviewAdapter";
 
     public recyclerviewAdapter(Context context) {
         this.context = context;
@@ -91,12 +104,15 @@ public class recyclerviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         TextView textContents;
         ImageView profileImage;
         TextView photoOrderText;
+        TextView likenumber;
         ImageContentsViewPager imageContentsViewPager;
         CircleIndicator circleIndicator;
         ImageButton expandedMenuButton;
         Button likeButton;
+        Button likeButton2;
         Button commentsButton;
         Button shareButton;
+
 
         ViewPageAdapter viewPageAdapter;
         ViewPageChangeListener viewPageChangeListener;
@@ -116,8 +132,11 @@ public class recyclerviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             photoOrderText = itemView.findViewById(R.id.chat_numbers_received_text);
             expandedMenuButton = itemView.findViewById(R.id.expanded_menuButton);
             likeButton = itemView.findViewById(R.id.like_button);
+            likeButton2 = itemView.findViewById(R.id.full_like_button);
             commentsButton = itemView.findViewById(R.id.comments_button);
             shareButton = itemView.findViewById(R.id.share_button);
+            likenumber = itemView.findViewById(R.id.like_number);
+
 
             handler = new Handler(Looper.getMainLooper());
         }
@@ -138,6 +157,9 @@ public class recyclerviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             imageContentsViewPager.addOnPageChangeListener(viewPageChangeListener);
             //   expandedMenuButton.setImageResource(item.getExpandedMenuButton());
 
+            //좋아요 갯수 구현
+            likenumber.setText(item.getFeedlikecount()+"개");
+
             photoOrderText.setText("1/" + viewPageAdapter.getCount());
             handler = new Handler(Looper.getMainLooper());
             handler.postDelayed(new Runnable() {
@@ -147,6 +169,90 @@ public class recyclerviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 }
             }, 2000);
             handler.removeCallbacksAndMessages(null);
+
+            //좋아요 버튼을 클릭여부 확인
+            int spring_my_userno = item.getSpring_my_userno();
+            int userno = item.getUserno();
+
+
+            Log.d(TAG,"좋아요 갯수:"+item.getFeedlikecount());
+
+
+
+
+            if(spring_my_userno==userno){
+              likeButton.setVisibility(View.GONE);
+              likeButton2.setVisibility(View.VISIBLE);
+            }
+            else if(spring_my_userno!=userno){
+                likeButton.setVisibility(View.VISIBLE);
+                likeButton2.setVisibility(View.GONE);
+            }
+
+            //댓글 버튼 클릭시 댓글 화면으로 이동 -> feedno 데이터를 보내준다
+            commentsButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+
+                   int feednum = item.getFeedno();
+                   String feedno = feednum+"";
+
+                    Intent intent = new Intent(context,CommentActivity.class);
+                    intent.putExtra("feedno",feedno);
+
+
+                    context.startActivity(intent);
+                }
+            });
+
+            //좋아요 버튼 클릭시 feedno를 feedlike 테이블에 보내준다
+            likeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    int feednum = item.getFeedno();
+                    String feedno = feednum+"";
+
+                    String like_btn_state = null;
+
+
+                    //현재 좋아요 버튼이 빨간색일때 db에서 delete 실행
+                    if(spring_my_userno==userno){
+                       like_btn_state = "0";
+                    }
+                    //현재 좋아요 버튼이 하얀색일때 db에서 insert 실행
+                    else if (spring_my_userno!=userno){
+                       like_btn_state = "1";
+                    }
+                    retrofitService = ourInstance.getInstance(BASE_URL,true).create(RetrofitService.class);
+
+                    //feedno를 보내준다
+                    Call<MyProfileDTO> call = retrofitService.postData6(feedno,like_btn_state);
+                    call.enqueue(new Callback<MyProfileDTO>() {
+                        @Override
+                        public void onResponse(Call<MyProfileDTO> call, Response<MyProfileDTO> response) {
+                            if(response.isSuccessful()){
+                                Log.d(TAG,"서버에 데이터 전송 성공");
+                                MyProfileDTO dto = response.body();
+
+                                int myusernumber = dto.getUserno();
+                                int userno = item.getUserno();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<MyProfileDTO> call, Throwable t) {
+                            Log.d(TAG,"서버에 데이터 전송 실패");
+                        }
+                    });
+
+
+
+                }
+
+            });
+
         }
 
         public class ViewPageChangeListener implements ViewPager.OnPageChangeListener {
@@ -254,6 +360,15 @@ public class recyclerviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             List<FeedimagelistDATA> imageContentss= item.getImageContents();
             Glide.with(context).load("http://192.168.0.2:8080/sns/download2?fileName="+imageContentss.get(0).getImagename()).into(imageContents);
          //   expandedMenuButton.setImageResource(item.getExpandedMenuButton());
+
+            //댓글 버튼 클릭시 댓글 화면으로 이동
+            commentsButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context,CommentActivity.class);
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 }

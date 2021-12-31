@@ -1,5 +1,6 @@
 package com.example.sns.main.ui.Myprofile;
 
+import com.example.sns.main.ui.feed.CommenttextDATA;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -19,10 +20,49 @@ public class MyProfileDTO {
     @SerializedName("list")
     public List<FeedimagelistDATA> list;
 
+    @SerializedName("data")
+    public List<CommenttextDATA> data;
 
+    @SerializedName("recommentdata")
+    public List<CommenttextDATA> recommentdata;
 
+    @SerializedName("userno")
+    private int userno;
 
+    @SerializedName("spring_my_userno")
+    private int spring_my_userno;
 
+    public int getSpring_my_userno() {
+        return spring_my_userno;
+    }
+
+    public void setSpring_my_userno(int spring_my_userno) {
+        this.spring_my_userno = spring_my_userno;
+    }
+
+    public int getUserno() {
+        return userno;
+    }
+
+    public void setUserno(int userno) {
+        this.userno = userno;
+    }
+
+    public List<FeedimagelistDATA> getList() {
+        return list;
+    }
+
+    public void setList(List<FeedimagelistDATA> list) {
+        this.list = list;
+    }
+
+    public List<CommenttextDATA> getData() {
+        return data;
+    }
+
+    public void setData(List<CommenttextDATA> data) {
+        this.data = data;
+    }
 
     public void setUsername(String username) {
         this.username = username;
