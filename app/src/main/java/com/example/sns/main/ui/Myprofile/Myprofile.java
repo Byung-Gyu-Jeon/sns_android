@@ -30,7 +30,7 @@ public class Myprofile extends AppCompatActivity {
 
         //스프링으로부터 데이터 받아오기 유저이름,유저 소개 텍스트
         Retrofit retrofit =
-                new Retrofit.Builder().baseUrl("http://192.168.0.2:8080/Test/post/").addConverterFactory(GsonConverterFactory.create()).build();
+                new Retrofit.Builder().baseUrl("http://59.13.221.12:80/Test/post/").addConverterFactory(GsonConverterFactory.create()).build();
         RetrofitService service = retrofit.create(RetrofitService.class);
 
         MyProfileDTO dto = new MyProfileDTO();

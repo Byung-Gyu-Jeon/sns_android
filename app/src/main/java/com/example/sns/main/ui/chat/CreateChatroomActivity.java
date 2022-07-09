@@ -18,6 +18,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sns.App;
@@ -40,6 +41,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.content.ContentValues.TAG;
 import static com.example.sns.Network.ApiClient.ourInstance;
 
 public class CreateChatroomActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
@@ -49,6 +51,7 @@ public class CreateChatroomActivity extends AppCompatActivity implements SearchV
     private ImageButton goBackButton;
     private Button okButton;
     private SearchView searchView;
+    private TextView textInfo;
 
     RecyclerView pickerRecyclerView;
     RecyclerView searchListRecyclerView;
@@ -83,6 +86,7 @@ public class CreateChatroomActivity extends AppCompatActivity implements SearchV
         goBackButton = findViewById(R.id.chatroom_back_btn);
         okButton = findViewById(R.id.ok_button);
         searchView = findViewById(R.id.create_chatroom_searchview);
+        textInfo = findViewById(R.id.text_info);
 
         pickerRecyclerView = (RecyclerView) findViewById(R.id.user_picker);
         LinearLayoutManager pickerLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -322,6 +326,8 @@ public class CreateChatroomActivity extends AppCompatActivity implements SearchV
                             App.sharedPreferenceManager.setRefreshToken(tokenDTO.getRefreshToken());
                         }
                         if (requestResponse.getCode() == 4700) {
+                            searchListRecyclerView.setVisibility(View.VISIBLE);
+                            textInfo.setVisibility(View.GONE);
                             list = requestResponse.getSearchListEntity();
 
                             SearchListAdapter adapter = new SearchListAdapter(CreateChatroomActivity.this, GlideApp.with(CreateChatroomActivity.this));
@@ -336,6 +342,9 @@ public class CreateChatroomActivity extends AppCompatActivity implements SearchV
                             searchListRecyclerView.setAdapter(adapter);
                             checkBoxDataList = adapter.getCheckBoxData();
                             checkedNum = adapter.getCheckedNum();
+                        }else if(requestResponse.getCode() == 4900) {
+                            searchListRecyclerView.setVisibility(View.GONE);
+                            textInfo.setVisibility(View.VISIBLE);
                         }
 
                     } else {
@@ -354,6 +363,10 @@ public class CreateChatroomActivity extends AppCompatActivity implements SearchV
                     Toast.makeText(CreateChatroomActivity.this, "인터넷 연결이 원활하지 않습니다.", Toast.LENGTH_SHORT).show();
                 }
             });
+        }else if (newText.equals("")) {
+            Log.d(TAG, "onCreate: x button clicked");
+            searchListRecyclerView.setVisibility(View.VISIBLE);
+            textInfo.setVisibility(View.GONE);
         }
         return true;
     }

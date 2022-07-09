@@ -22,7 +22,7 @@ public class FriendEditAdapterr extends RecyclerView.Adapter<FriendEditAdapterr.
     @NonNull
     @Override
     public FriendEditAdapterr.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item3,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_friend_list_item_view,parent,false);
         return new FriendEditAdapterr.ItemViewHolder(view);
     }
 
@@ -43,8 +43,8 @@ public class FriendEditAdapterr extends RecyclerView.Adapter<FriendEditAdapterr.
 
         public ItemViewHolder(@NonNull View itemView){
             super(itemView);
-            imageView = itemView.findViewById(R.id.imageView4);
-            textView = itemView.findViewById(R.id.textView21);
+//            imageView = itemView.findViewById(R.id.imageView4);
+//            textView = itemView.findViewById(R.id.textView21);
         }
         void Bind(Data3 data){
             imageView.setBackground(new ShapeDrawable(new OvalShape()));

@@ -23,6 +23,7 @@ import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -45,6 +46,14 @@ public interface RetrofitService {
      *       : https://jsonplaceholder.typicode.com/posts
      *   posts에 새로운 데이터 추가하는 메서드
      */
+    @DELETE("{userNo}")
+    Call<RequestResponse> deleteFriend(@Path("userNo") Long userNo);
+
+    @GET("all")
+    Call<RequestResponse> getFriendList();
+
+    @GET("name")
+    Call<RequestResponse> getSearchFriendList(@Query("searchText") String searchText);
 
     @GET("gets")
     Call<RequestResponse> getFriendRequestList();
@@ -54,7 +63,11 @@ public interface RetrofitService {
 
     @FormUrlEncoded
     @POST("posts")
-    Call<RequestResponse> actionRequest(@Field("requestedUserNo") Long requestedUserNo, @Field("type") int type);
+    Call<RequestResponse> actionResponse(@Field("requestedUserNo") Long requestedUserNo, @Field("type") int type);
+
+    @FormUrlEncoded
+    @POST("request")
+    Call<RequestResponse> actionRequest(@Field("userNo") Long userNo, @Field("type") int type);
 
     @POST("posts")
     Call<User> setPostBody(@Body User post);
@@ -122,5 +135,14 @@ public interface RetrofitService {
     @FormUrlEncoded
     @POST("gets")
     Call<MyProfileDTO> getData2(@Field("num") String num);
+
+    //상대 프로필 화면에서 서버에서 사진 이름받기 위한 코드
+    @FormUrlEncoded
+    @POST("gets3")
+    Call<MyProfileDTO> getData(@Field("userNo") Long userNo);
+
+    // 데이터 수정화면에서 내가 저장한 이름,소개글 가져오기
+    @GET("gets")
+    Call<MyProfileDTO> getGets(@Query("userNo")Long userNo);
 
 }

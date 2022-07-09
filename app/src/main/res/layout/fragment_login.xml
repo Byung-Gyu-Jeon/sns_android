@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
             name="name"
@@ -8,23 +10,24 @@
             name="view"
             type="android.view.View" />
     </data>
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".login.LoginFragment">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/Btn_Join"
-            android:layout_width="wrap_content"
+            android:layout_width="210dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="회원가입"
-            android:backgroundTint="#D1D0CE"
+            android:background="@android:color/transparent"
+            android:text="가입하기"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            app:rippleColor="#666362"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/Btn_Login"
-            app:layout_constraintTop_toBottomOf="@+id/editText_password">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Btn_Login">
 
         </com.google.android.material.button.MaterialButton>
 
@@ -65,13 +68,15 @@
 
         <Button
             android:id="@+id/Btn_Login"
-            android:layout_width="wrap_content"
+            android:layout_width="210dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
+            android:backgroundTint="#D1D0CE"
             android:onClick="@{() -> name.Login(view)}"
             android:text="로그인"
-            android:backgroundTint="#D1D0CE"
-            app:layout_constraintEnd_toStartOf="@+id/Btn_Join"
+            android:textSize="17dp"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editText_password" />
 

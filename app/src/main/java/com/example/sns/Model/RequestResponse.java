@@ -12,11 +12,15 @@ public class RequestResponse {
     private String message;
     @SerializedName("code")
     private int code;
+    @SerializedName("numberOfFriend")
+    private int numberOfFriend;
 
     @SerializedName("friendRequestListEntity")
     private List<FriendRequestListEntity> friendRequestList = new ArrayList<>();
     @SerializedName("searchListEntity")
     private List<SearchListEntity> searchList = new ArrayList<>();
+    @SerializedName("friendList")
+    private List<FriendListEntity> friendList = new ArrayList<>();
 
 //    FriendRequestListEntity friendRequestListEntity;
 
@@ -139,6 +143,59 @@ public class RequestResponse {
         }
     }
 
+    public static class FriendListEntity {
+        @SerializedName("userNo")
+        private Long userNo;
+        @SerializedName("userName")
+        private String userName;
+        @SerializedName("userImageUrl")
+        private String userImageUrl;
+        @SerializedName("friendStatus")
+        private byte friendStatus;
+
+        public FriendListEntity() {
+            super();
+        }
+        public FriendListEntity(Long userNo, byte friendStatus) {
+            super();
+            this.userNo = userNo;
+            this.friendStatus = friendStatus;
+        }
+
+        public FriendListEntity(Long userNo, String userName, String userImageUrl, byte friendStatus) {
+            super();
+            this.userNo = userNo;
+            this.userName = userName;
+            this.userImageUrl = userImageUrl;
+            this.friendStatus = friendStatus;
+        }
+        public Long getUserNo() {
+            return userNo;
+        }
+        public void setUserNo(Long userNo) {
+            this.userNo = userNo;
+        }
+
+        public String getUserName() {
+            return userName;
+        }
+        public void setUserName(String userName) {
+            this.userName = userName;
+        }
+        public String getUserImageUrl() {
+            return userImageUrl;
+        }
+        public void setUserImageUrl(String userImageUrl) {
+            this.userImageUrl = userImageUrl;
+        }
+        public byte getFriendStatus() {
+            return friendStatus;
+        }
+        public void setFriendStatus(byte friendStatus) {
+            this.friendStatus = friendStatus;
+        }
+    }
+
 //	public FriendRequestListEntity instance = new RequestResponse.FriendRequestListEntity();
 
     public String getMessage() {
@@ -181,5 +238,16 @@ public class RequestResponse {
         this.searchList = searList;
     }
 
+    public List<FriendListEntity> getFriendList() {
+        return friendList;
+    }
+
+    public void setFriendList(List<FriendListEntity> friendList) {
+        this.friendList = friendList;
+    }
+
+    public int getNumberOfFriend() { return numberOfFriend; }
+
+    public void setNumberOfFriend(int numberOfFriend) { this.numberOfFriend = numberOfFriend; }
 }
 

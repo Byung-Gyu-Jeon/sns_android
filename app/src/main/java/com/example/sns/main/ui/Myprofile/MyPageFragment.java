@@ -71,9 +71,9 @@ public class MyPageFragment extends Fragment {
     private MyPageViewModel myPageViewModel;
     private MyprofileAdapter adapter;
     //프로필 사진이랑 이름,소개글 db에서 가져오기
-    private final static String BASE_URL="http://192.168.0.2:8080/sns/get/";
+    private final static String BASE_URL="http://59.13.221.12:80/sns/get/";
     //게시글 추가할때 올린 사진들 가져오기
-    private final static String BASE_URL2="http://192.168.0.2:8080/sns/gett/";
+    private final static String BASE_URL2="http://59.13.221.12:80/sns/gett/";
     private RetrofitService retrofitService;
     public static ApiClient ourInstance = null;
     String ptoname= null;
@@ -134,7 +134,7 @@ public class MyPageFragment extends Fragment {
                     Log.d(TAG,"사진이름:"+ptoname);
 
                     //사진 불러오기
-                    Glide.with(getContext()).load("http://192.168.0.2:8080/sns/download?fileName=" + ptoname).apply(new RequestOptions().circleCrop())
+                    Glide.with(getContext()).load("http://59.13.221.12:80/sns/download?fileName=" + ptoname).apply(new RequestOptions().circleCrop())
                             .into(imageView);
                 }
                 else{
@@ -270,7 +270,7 @@ public class MyPageFragment extends Fragment {
                             Log.d(TAG,"사진이름:"+ptoname);
 
                             //사진 불러오기
-                            Glide.with(getContext()).load("http://192.168.0.2:8080/sns/download?fileName=" + ptoname).apply(new RequestOptions().circleCrop())
+                            Glide.with(getContext()).load("http://59.13.221.12:80/sns/download?fileName=" + ptoname).apply(new RequestOptions().circleCrop())
                                     .into(imageView);
                         }
                         else{

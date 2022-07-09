@@ -6,14 +6,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,10 +21,9 @@ import com.example.sns.App;
 import com.example.sns.GlideApp;
 import com.example.sns.Model.RequestResponse;
 import com.example.sns.Model.TokenDTO;
-import com.example.sns.Network.ApiClient;
 import com.example.sns.Network.RetrofitService;
 import com.example.sns.R;
-import com.example.sns.main.MainActivity;
+import com.example.sns.main.ui.userpage.UserPageActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,10 +32,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.content.ContentValues.TAG;
 import static com.example.sns.Network.ApiClient.ourInstance;
 
 public class FriendFragment extends Fragment {
-    private final String TAG = getClass().getSimpleName();
 
     private final static String BASE_URL = "http://59.13.221.12:80/sns/getlist.do/";	// 기본 Base URL
 
@@ -52,8 +51,11 @@ public class FriendFragment extends Fragment {
 
     private FriendViewModel friendViewModel;
     RecyclerView recyclerView;
+    RecyclerAdapter adapter;
 
-    ImageButton imageButton;
+    TextView textInfo;
+    ImageButton searchBtn;
+    Button myFriendBtn;
 
     // 각각의 Fragment마다 Instance를 반환해 줄 메소드를 생성합니다.
     public static FriendFragment newInstance() {
@@ -65,14 +67,21 @@ public class FriendFragment extends Fragment {
         friendViewModel = new ViewModelProvider(this).get(FriendViewModel.class);
         View root = inflater.inflate(R.layout.fragment_friend, container, false);
 
-        imageButton = (ImageButton)root.findViewById(R.id.search_btn);
-        imageButton.setOnClickListener(new View.OnClickListener() {
+        textInfo = root.findViewById(R.id.text_info);
+        myFriendBtn = root.findViewById(R.id.my_friend_button);
+        searchBtn = (ImageButton)root.findViewById(R.id.search_btn);
+        searchBtn.setOnClickListener(v -> {
+            Log.d("검색 누름","onclick 실행");
+            Intent intent = null;
+            intent = new Intent(getContext(), FriendSearchActivity.class);
+//                intent.putExtra("token",token);
+            startActivity(intent);
+        });
+
+        myFriendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("검색 누름","onclick 실행");
-                Intent intent = null;
-                intent = new Intent(getContext(), FriendSearchActivity.class);
-//                intent.putExtra("token",token);
+                Intent intent = new Intent(getContext(), FriendListActivity.class);
                 startActivity(intent);
             }
         });
@@ -81,7 +90,7 @@ public class FriendFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(layoutManager);
 
-        retrofitService = ourInstance.getInstance(BYUNG_BASE_URL, true).create(RetrofitService.class);
+        retrofitService = ourInstance.getInstance(BASE_URL, true).create(RetrofitService.class);
         tokenDTO = new TokenDTO();
         Call<RequestResponse> getList = retrofitService.getFriendRequestList();
         Log.d("친구목록 요청 base url : ",ourInstance.getBaseUrl());
@@ -105,15 +114,34 @@ public class FriendFragment extends Fragment {
                         App.sharedPreferenceManager.setRefreshToken(tokenDTO.getRefreshToken());
                     }
 
-                    RecyclerAdapter adapter = new RecyclerAdapter(getContext(), GlideApp.with(getContext()));
-                    adapter.addItem(new item(0));
+                    Log.d(TAG, "onResponse: 응답 코드 : " + requestResponse.getCode());
+                    if (requestResponse.getCode() == 4700) {
+                        textInfo.setVisibility(View.GONE);
+                        adapter = new RecyclerAdapter(getContext(), GlideApp.with(getContext()));
+                        adapter.addItem(new item(0));
 
-                    for(RequestResponse.FriendRequestListEntity requestList : list) {
-                        adapter.addItem(new item(requestList.getUserNo(), requestList.getUserName(), requestList.getUserImageUrl(),1));
-                        Log.d("조회한 목록 " ,""+ requestList.getUserName() + "  " + requestList.getUserImageUrl());
+                        for (RequestResponse.FriendRequestListEntity requestList : list) {
+                            adapter.addItem(new item(requestList.getUserNo(), requestList.getUserName(), requestList.getUserImageUrl(), 1));
+                            Log.d("조회한 목록 ", "" + requestList.getUserName() + "  " + requestList.getUserImageUrl());
+                        }
+
+                        recyclerView.setAdapter(adapter);
+
+                        adapter.setOnItemClickListener(new RecyclerAdapter.OnItemClickEventListener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
+                                final item item = adapter.getItem().get(position);
+                                Long userNo = item.getUserNo();
+                                Intent intent = new Intent(getContext(), UserPageActivity.class);
+
+                                intent.putExtra("userNo", userNo);
+                                startActivity(intent);
+                                Toast.makeText(getContext(), item.getUserName() + " Click event", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    } else if (requestResponse.getCode() == 4900) {
+                        textInfo.setVisibility(View.VISIBLE);
                     }
-
-                    recyclerView.setAdapter(adapter);
 
                 }
                 else {

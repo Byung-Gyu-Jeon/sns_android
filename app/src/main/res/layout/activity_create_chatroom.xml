@@ -93,6 +93,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="12dp"
             android:background="@drawable/layout_search_background"
+            app:queryBackground="@null"
             app:closeIcon="@drawable/ic_baseline_close_24"
             app:iconifiedByDefault="false"
             app:layout_constraintEnd_toEndOf="parent"
@@ -110,5 +111,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/constraintLayout" />
+
+    <TextView
+        android:id="@+id/text_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:textAlignment="center"
+        android:text="검색 결과가 없습니다"
+        android:textSize="20sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
