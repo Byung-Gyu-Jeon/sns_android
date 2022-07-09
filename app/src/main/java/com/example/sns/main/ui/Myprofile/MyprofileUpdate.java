@@ -48,8 +48,8 @@ public class MyprofileUpdate extends AppCompatActivity {
 
     private Object Response;
     private static final String TAG = "MyprofileUpdate";
-    private final static String BASE_URL="http://192.168.0.2:8080/sns/posts/";
-    private final static String BASE_URL2="http://192.168.0.2:8080/sns/get/";
+    private final static String BASE_URL="http://59.13.221.12:80/sns/posts/";
+    private final static String BASE_URL2="http://59.13.221.12:80/sns/get/";
     private RetrofitService retrofitService;
     private RetrofitService retrofitService2;
     public static ApiClient ourInstance = null;
@@ -99,7 +99,7 @@ public class MyprofileUpdate extends AppCompatActivity {
                     Log.d(TAG,"사진이름:"+ptoname);
 
                     //사진 불러오기
-                    Glide.with(getBaseContext()).load("http://192.168.0.2:8080/sns/download?fileName=" + ptoname).apply(new RequestOptions().circleCrop())
+                    Glide.with(getBaseContext()).load("http://59.13.221.12:80/sns/download?fileName=" + ptoname).apply(new RequestOptions().circleCrop())
                             .into(imageView);
                 }
                 else{

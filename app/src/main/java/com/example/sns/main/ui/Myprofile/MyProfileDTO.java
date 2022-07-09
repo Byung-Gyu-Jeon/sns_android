@@ -20,8 +20,24 @@ public class MyProfileDTO {
     @SerializedName("list")
     public List<FeedimagelistDATA> list;
 
+//<<<<<<< HEAD
     @SerializedName("data")
     public List<CommenttextDATA> data;
+//=======
+    /*
+	친구 관계 판별하기위한 코드
+	4900 : 친구가 아님
+	4800 : 친구 요청을 받음
+	4700 : 내가 친구요청을 함
+	4600 : 친구관계
+	*/
+    @SerializedName("code")
+    private int code;
+
+    @SerializedName("numberOfFriend")
+    private int numberOfFriend;
+
+//>>>>>>> feature/dong
 
     @SerializedName("recommentdata")
     public List<CommenttextDATA> recommentdata;
@@ -83,6 +99,14 @@ public class MyProfileDTO {
     }
 
     public String getPtoname() { return ptoname; }
+
+    public int getCode() { return code; }
+
+    public void setCode(int code) { this.code = code; }
+
+    public int getNumberOfFriend() { return numberOfFriend; }
+
+    public void setNumberOfFriend(int numberOfFriend) { this.numberOfFriend = numberOfFriend; }
 
     @Override
     public String toString() {

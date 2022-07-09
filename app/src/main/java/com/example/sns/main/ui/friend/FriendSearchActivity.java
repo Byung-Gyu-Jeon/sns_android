@@ -2,6 +2,7 @@ package com.example.sns.main.ui.friend;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -9,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +26,7 @@ import com.example.sns.MyToolbar;
 import com.example.sns.Network.RetrofitService;
 import com.example.sns.R;
 import com.example.sns.main.MainActivity;
+import com.example.sns.main.ui.userpage.UserPageActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +35,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.content.ContentValues.TAG;
 import static com.example.sns.Network.ApiClient.ourInstance;
 
 public class FriendSearchActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
@@ -41,6 +45,7 @@ public class FriendSearchActivity extends AppCompatActivity implements SearchVie
     private ImageButton searchButton;
     private SearchView searchView;
     private EditText searchEditText;
+    private TextView textInfo;
 
     RecyclerView recyclerView;
 
@@ -57,34 +62,34 @@ public class FriendSearchActivity extends AppCompatActivity implements SearchVie
     private TokenDTO tokenDTO = null;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_friend_search);
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_friend_search);
 
 //        searchEditText = findViewById(R.id.editText_search);
-        goBackButton = findViewById(R.id.go_back_btn);
+            goBackButton = findViewById(R.id.go_back_btn);
 //        searchButton = findViewById(R.id.search_btn);
-        searchView = findViewById(R.id.friend_searchView);
+            searchView = findViewById(R.id.friend_searchView);
+            textInfo = findViewById(R.id.text_info);
 
-        recyclerView = (RecyclerView)findViewById(R.id.recyclerview3);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(layoutManager);
+            recyclerView = (RecyclerView)findViewById(R.id.recyclerview3);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+            recyclerView.setLayoutManager(layoutManager);
 
-        retrofitService = ourInstance.getInstance(BYUNG_BASE_URL, true).create(RetrofitService.class);
+            retrofitService = ourInstance.getInstance(BASE_URL, true).create(RetrofitService.class);
 
-        goBackButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("btn","버튼 누름");
-                if(view == goBackButton) {
-                    finish();
+            goBackButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.d("btn","버튼 누름");
+                    if(view == goBackButton) {
+                        finish();
 //            findViewById(R.id.text_home).setVisibility(View.VISIBLE);
+                    }
                 }
-            }
-        });
+            });
 //        searchButton.setOnClickListener(this);
-        searchView.setOnQueryTextListener(this);
-
+            searchView.setOnQueryTextListener(this);
 
     }
 
@@ -130,7 +135,9 @@ public class FriendSearchActivity extends AppCompatActivity implements SearchVie
                         if (requestResponse.getCode() == 4700) {
                             list = requestResponse.getSearchListEntity();
 
+                            recyclerView.setVisibility(View.VISIBLE);
                             findViewById(R.id.text_home).setVisibility(View.INVISIBLE);
+                            textInfo.setVisibility(View.GONE);
 
                             SearchRecyclerAdapter adapter = new SearchRecyclerAdapter(FriendSearchActivity.this, GlideApp.with(FriendSearchActivity.this));
                             adapter.addItem(new item(0));
@@ -141,6 +148,36 @@ public class FriendSearchActivity extends AppCompatActivity implements SearchVie
                             }
 
                             recyclerView.setAdapter(adapter);
+
+                            adapter.setOnItemClickListener(new SearchRecyclerAdapter.OnItemClickEventListener() {
+                                @Override
+                                public void onItemClick(View view, int position) {
+                                    final item item = adapter.getItem().get(position);
+                                    Long userNo = item.getUserNo();
+                                    Long myUserNo = App.sharedPreferenceManager.getUserNo();
+
+                                    if (userNo.equals(myUserNo)) { // 검색 목록 클릭시 본인계정일 경우(아직 수정 안함)
+                                        Intent intent = new Intent(FriendSearchActivity.this, UserPageActivity.class);
+
+                                        Log.d("ContentValues", "넘길 유저 번호 : " + userNo);
+                                        intent.putExtra("userNo", userNo);
+                                        startActivity(intent);
+                                        Toast.makeText(FriendSearchActivity.this, item.getUserName() + " Click event", Toast.LENGTH_SHORT).show();
+
+                                    } else {
+                                        Intent intent = new Intent(FriendSearchActivity.this, UserPageActivity.class);
+
+                                        Log.d("ContentValues", "넘길 유저 번호 : " + userNo);
+                                        intent.putExtra("userNo", userNo);
+                                        startActivity(intent);
+                                        Toast.makeText(FriendSearchActivity.this, item.getUserName() + " Click event", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                        } else if( requestResponse.getCode() == 4900) {
+                            recyclerView.setVisibility(View.GONE);
+                            findViewById(R.id.text_home).setVisibility(View.GONE);
+                            textInfo.setVisibility(View.VISIBLE);
                         }
 
                     } else {
@@ -159,6 +196,10 @@ public class FriendSearchActivity extends AppCompatActivity implements SearchVie
                     Toast.makeText(FriendSearchActivity.this, "인터넷 연결이 원활하지 않습니다.", Toast.LENGTH_SHORT).show();
                 }
             });
+        }else if (newText.equals("")) {
+            Log.d(TAG, "onCreate: x button clicked");
+            recyclerView.setVisibility(View.VISIBLE);
+            textInfo.setVisibility(View.GONE);
         }
         return true;
     }

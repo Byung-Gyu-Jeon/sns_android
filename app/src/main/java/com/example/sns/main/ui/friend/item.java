@@ -5,6 +5,8 @@ public class item {
     private String userName;
     private String userImageUrl;
     private String isFriend;
+    private byte friendStatus;
+    private int numberOfFriend;
     private int profileImage;
     private int acceptButton;
     private int deleteButton;
@@ -34,6 +36,19 @@ public class item {
 //        this.viewType = viewType;
 //    }
 
+
+    public item(int numberOfFriend, int viewType) {
+        this.numberOfFriend = numberOfFriend;
+        this.viewType = viewType;
+    }
+
+    public item(Long userNo, String userName, String userImageUrl, byte friendStatus, int viewType) {
+        this.userNo = userNo;
+        this.userName = userName;
+        this.userImageUrl = userImageUrl;
+        this.friendStatus = friendStatus;
+        this.viewType = viewType;
+    }
 
     public item(Long userNo, String userName, String userImageUrl, int viewType) {
         this.userNo = userNo;
@@ -98,6 +113,10 @@ public class item {
         this.isFriend = isFriend;
     }
 
+    public byte getFriendStatus() { return friendStatus; }
+
+    public void setFriendStatus(byte friendStatus) { this.friendStatus = friendStatus; }
+
     public int getAcceptButton() {
         return acceptButton;
     }
@@ -121,4 +140,8 @@ public class item {
     public void setViewType(int viewType) {
         this.viewType = viewType;
     }
+
+    public int getNumberOfFriend() { return numberOfFriend; }
+
+    public void setNumberOfFriend(int numberOfFriend) { this.numberOfFriend = numberOfFriend; }
 }

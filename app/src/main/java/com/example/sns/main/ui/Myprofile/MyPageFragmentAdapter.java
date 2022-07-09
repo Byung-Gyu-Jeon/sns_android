@@ -1,6 +1,8 @@
 package com.example.sns.main.ui.Myprofile;
 
 import android.content.Context;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +41,7 @@ public class MyPageFragmentAdapter extends RecyclerView.Adapter<MyPageFragmentAd
     @Override
     public void onBindViewHolder(@NonNull MyPageFragmentAdapter.ViewHolder holder, int position) {
 
-            Glide.with(context).load("http://192.168.0.2:8080/sns/download2?fileName="+data.get(position).getImagename()).into(holder.imageView);
+            Glide.with(context).load("http://59.13.221.12:80/sns/download2?fileName="+data.get(position).getImagename()).into(holder.imageView);
 
                Log.d(TAG,data.get(position).getImagename());
 
@@ -56,6 +58,8 @@ public class MyPageFragmentAdapter extends RecyclerView.Adapter<MyPageFragmentAd
         ViewHolder(View itemView){
             super(itemView);
             imageView=itemView.findViewById(R.id.imageView6);
+//            imageView.setBackground(new ShapeDrawable(new OvalShape()));
+//            imageView.setClipToOutline(true);
         }
     }
 

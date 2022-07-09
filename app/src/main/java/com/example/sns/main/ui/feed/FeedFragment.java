@@ -46,6 +46,7 @@ public class FeedFragment extends Fragment {
     private static final String TAG3 = "FeedFragment3";
     private RetrofitService retrofitService;
     private final static String BYUNG_BASE_URL="http://192.168.0.2:8080/sns/gett2/";
+    private final static String BASE_URL="http://59.13.221.12:80/sns/gett2/";
     public static ApiClient ourInstance = null;
 
     private FeedViewModel feedViewModel;
@@ -76,7 +77,7 @@ public class FeedFragment extends Fragment {
 
 
         // db에서 feed번호와 사진들을 가져온다
-        retrofitService = ourInstance.getInstance(BYUNG_BASE_URL,true).create(RetrofitService.class);
+        retrofitService = ourInstance.getInstance(BASE_URL,true).create(RetrofitService.class);
 
         Call<MyProfileDTO> call = retrofitService.getData2("1");
         call.enqueue(new Callback<MyProfileDTO>() {

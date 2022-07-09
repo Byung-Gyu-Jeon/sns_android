@@ -43,7 +43,7 @@ public class AppLogoActivity extends Activity {
             startActivity(intent);   // 로그인 화면으로...
         } else if(App.sharedPreferenceManager.getToken() != null) { //access, refresh 토큰 둘다 가지고 있으면..
             // autologin 호출
-            retrofitService = ourInstance.getInstance(BYUNG_BASE_URL, true).create(RetrofitService.class);
+            retrofitService = ourInstance.getInstance(BASE_URL, true).create(RetrofitService.class);
             tokenRequestDTO = new TokenRequestDTO();
             tokenDTO = new TokenDTO();
 

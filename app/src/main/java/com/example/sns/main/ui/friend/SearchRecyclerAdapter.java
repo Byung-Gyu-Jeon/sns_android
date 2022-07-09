@@ -21,6 +21,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
+import com.example.sns.App;
 import com.example.sns.R;
 
 import org.jetbrains.annotations.Nullable;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 
 public class SearchRecyclerAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final RequestManager glide;
+    private OnItemClickEventListener mItemClickListener;
     Context context;
     ArrayList<item> items = new ArrayList<item>();
 
@@ -52,7 +54,7 @@ public class SearchRecyclerAdapter  extends RecyclerView.Adapter<RecyclerView.Vi
             case 0 :
                 return new SearchRecyclerAdapter.ViewHolderFriendListText(LayoutInflater.from(parent.getContext()).inflate(R.layout.frined_serach_text_view,parent,false));
             default :
-                return new SearchRecyclerAdapter.ViewHolderFriendSearchList(LayoutInflater.from(parent.getContext()).inflate(R.layout.friend_search_item_view,parent,false));
+                return new SearchRecyclerAdapter.ViewHolderFriendSearchList(LayoutInflater.from(parent.getContext()).inflate(R.layout.friend_search_item_view,parent,false), mItemClickListener);
         }
     }
 
@@ -81,6 +83,7 @@ public class SearchRecyclerAdapter  extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     public item getItem(int position) { return items.get(position);}
+    public ArrayList<item> getItem() { return items;}
 
     public class ViewHolderFriendSearchList extends RecyclerView.ViewHolder {
         Long userNo;
@@ -88,13 +91,22 @@ public class SearchRecyclerAdapter  extends RecyclerView.Adapter<RecyclerView.Vi
         ImageView profileImage;
         TextView isFriend;
 
-        public ViewHolderFriendSearchList(View itemView) {
+        public ViewHolderFriendSearchList(View itemView, final OnItemClickEventListener itemClickListener) {
             super(itemView);
 
             userName = itemView.findViewById(R.id.search_list_name);
             isFriend = itemView.findViewById(R.id.search_list_is_friend);
             profileImage = itemView.findViewById(R.id.img_profile_friend_search);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    final int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        itemClickListener.onItemClick(view, position);
+                    }
+                }
+            });
         }
 
         public void setItem(item item) {
@@ -113,7 +125,7 @@ public class SearchRecyclerAdapter  extends RecyclerView.Adapter<RecyclerView.Vi
 
 
 
-                glide.load("http://192.168.0.2:8080/sns/download?fileName="+item.getUserImageUrl()).apply(new RequestOptions().circleCrop()).error(R.drawable.doughnut)
+                glide.load("http://59.13.221.12:80/sns/download?fileName="+item.getUserImageUrl()).apply(new RequestOptions().circleCrop()).error(R.drawable.doughnut)
 
                         .listener(new RequestListener<Drawable>() {
                             @Override
@@ -140,5 +152,13 @@ public class SearchRecyclerAdapter  extends RecyclerView.Adapter<RecyclerView.Vi
         public void setItem(item item) {
             //   expandedMenuButton.setImageResource(item.getExpandedMenuButton());
         }
+    }
+
+    public interface OnItemClickEventListener {
+        void onItemClick(View view, int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickEventListener listener) {
+        mItemClickListener = listener;
     }
 }

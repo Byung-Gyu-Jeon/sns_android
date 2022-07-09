@@ -40,6 +40,7 @@ import static com.example.sns.Network.ApiClient.ourInstance;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final RequestManager glide;
+    private OnItemClickEventListener mItemClickListener;
     private TokenDTO tokenDTO = null;
     Context context;
     ArrayList<item> items = new ArrayList<item>();
@@ -65,7 +66,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             case 0 :
                 return new RecyclerAdapter.ViewHolderFriendRequestText(LayoutInflater.from(parent.getContext()).inflate(R.layout.friend_request_item_view1,parent,false));
             default :
-                return new RecyclerAdapter.ViewHolderFriendRequestList(LayoutInflater.from(parent.getContext()).inflate(R.layout.friend_request_item_view2,parent,false));
+                return new RecyclerAdapter.ViewHolderFriendRequestList(LayoutInflater.from(parent.getContext()).inflate(R.layout.friend_request_item_view2,parent,false), mItemClickListener);
         }
     }
 
@@ -94,6 +95,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public item getItem(int position) { return items.get(position);}
+    public ArrayList<item> getItem() { return items;}
 
         public class ViewHolderFriendRequestList extends RecyclerView.ViewHolder implements View.OnClickListener{
             private final String TAG = getClass().getSimpleName();
@@ -111,15 +113,25 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             Button acceptButton;
             Button deleteButton;
 
-            public ViewHolderFriendRequestList(View itemView) {
+            public ViewHolderFriendRequestList(View itemView, final OnItemClickEventListener itemClickListener) {
                 super(itemView);
 
-                retrofitService = ourInstance.getInstance(BYUNG_BASE_URL, true).create(RetrofitService.class);
+                retrofitService = ourInstance.getInstance(BASE_URL, true).create(RetrofitService.class);
 
                 userName = itemView.findViewById(R.id.user_name_text);
                 profileImage = itemView.findViewById(R.id.img_profile_friend_request);
                 acceptButton = itemView.findViewById(R.id.button1);
                 deleteButton = itemView.findViewById(R.id.button2);
+
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        final int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            itemClickListener.onItemClick(view, position);
+                        }
+                    }
+                });
             }
 
             public void setItem(item item) {
@@ -134,7 +146,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 //                GlideApp.with(context).load(item.getUserImageUrl()).apply(RequestOptions.bitmapTransform(new CropCircleWithBorderTransformation())).into(profileImage);
 //                glide.load(item.getUserImageUrl()).apply(new RequestOptions().circleCrop()).error(R.drawable.doughnut)
 
-                glide.load("http://192.168.0.2:8080/sns/download?fileName="+item.getUserImageUrl()).apply(new RequestOptions().circleCrop()).error(R.drawable.doughnut)
+                glide.load("http://59.13.221.12:80/sns/download?fileName="+item.getUserImageUrl()).apply(new RequestOptions().circleCrop()).error(R.drawable.doughnut)
 
                         .listener(new RequestListener<Drawable>() {
                             @Override
@@ -156,7 +168,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 Log.d("btn","버튼 누름");
                 if(view == acceptButton) { //수락 버튼
                     int type = 1;
-                    Call<RequestResponse> requestAction = retrofitService.actionRequest(userNo, type);
+                    Call<RequestResponse> requestAction = retrofitService.actionResponse(userNo, type);
                     requestAction.enqueue(new Callback<RequestResponse>() {
                         @Override
                         public void onResponse(Call<RequestResponse> call, Response<RequestResponse> response) {
@@ -195,7 +207,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     });
                 }else if(view == deleteButton) { //거절 버튼
                     int type = 0;
-                    Call<RequestResponse> requestAction = retrofitService.actionRequest(userNo, type);
+                    Call<RequestResponse> requestAction = retrofitService.actionResponse(userNo, type);
                     requestAction.enqueue(new Callback<RequestResponse>() {
                         @Override
                         public void onResponse(Call<RequestResponse> call, Response<RequestResponse> response) {
@@ -248,5 +260,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }
         }
 
+    public interface OnItemClickEventListener {
+        void onItemClick(View view, int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickEventListener listener) {
+        mItemClickListener = listener;
+    }
 
 }
